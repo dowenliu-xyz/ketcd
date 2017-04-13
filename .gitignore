@@ -1,0 +1,12 @@
+.*
+!.gitignore
+!.travis.yml
+
+# IDEA module file
+*.iml
+
+# Created by './scripts/run_etcd.sh'
+/external/
+
+# maven output folder
+target/
