@@ -74,7 +74,8 @@ class EtcdClient(val channelBuilder: ManagedChannelBuilder<*>,
         /**
          * The distinct list of endpoints configured for the builder.
          */
-        val endpoints = _endpoints.distinct().toList()
+        val endpoints: List<Endpoint>
+            get() = _endpoints.distinct().toList()
 
         /**
          * Add etcd server endpoints.
