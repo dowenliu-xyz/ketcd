@@ -28,7 +28,7 @@ class EtcdClusterServiceImpl internal constructor(val channel: ManagedChannel, v
 
     override fun listMember(): MemberListResponse = blockingStub.memberList(MemberListRequest.getDefaultInstance())
 
-    override fun listMemberFuture(): ListenableFuture<MemberListResponse> =
+    override fun listMemberInFuture(): ListenableFuture<MemberListResponse> =
             futureStub.memberList(MemberListRequest.getDefaultInstance())
 
     override fun listMemberAsync(callback: ResponseCallback<MemberListResponse>) =
@@ -54,7 +54,7 @@ class EtcdClusterServiceImpl internal constructor(val channel: ManagedChannel, v
     override fun addMember(peerAddresses: Array<Endpoint>): MemberAddResponse =
             blockingStub.memberAdd(addMemberRequest(peerAddresses))
 
-    override fun addMemberFuture(peerAddresses: Array<Endpoint>): ListenableFuture<MemberAddResponse> =
+    override fun addMemberInFuture(peerAddresses: Array<Endpoint>): ListenableFuture<MemberAddResponse> =
             futureStub.memberAdd(addMemberRequest(peerAddresses))
 
     override fun addMemberAsync(peerAddresses: Array<Endpoint>, callback: ResponseCallback<MemberAddResponse>) =
@@ -73,7 +73,7 @@ class EtcdClusterServiceImpl internal constructor(val channel: ManagedChannel, v
     override fun removeMember(memberId: Long): MemberRemoveResponse =
             blockingStub.memberRemove(MemberRemoveRequest.newBuilder().setID(memberId).build())
 
-    override fun removeMemberFuture(memberId: Long): ListenableFuture<MemberRemoveResponse> =
+    override fun removeMemberInFuture(memberId: Long): ListenableFuture<MemberRemoveResponse> =
             futureStub.memberRemove(MemberRemoveRequest.newBuilder().setID(memberId).build())
 
     override fun removeMemberAsync(memberId: Long, callback: ResponseCallback<MemberRemoveResponse>) =
@@ -101,7 +101,7 @@ class EtcdClusterServiceImpl internal constructor(val channel: ManagedChannel, v
     override fun updateMember(memberId: Long, peerAddresses: Array<Endpoint>): MemberUpdateResponse =
             blockingStub.memberUpdate(updateMemberRequest(memberId, peerAddresses))
 
-    override fun updateMemberFuture(memberId: Long, peerAddresses: Array<Endpoint>):
+    override fun updateMemberInFuture(memberId: Long, peerAddresses: Array<Endpoint>):
             ListenableFuture<MemberUpdateResponse> =
             futureStub.memberUpdate(updateMemberRequest(memberId, peerAddresses))
 

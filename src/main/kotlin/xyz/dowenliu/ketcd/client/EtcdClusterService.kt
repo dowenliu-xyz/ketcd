@@ -27,7 +27,7 @@ interface EtcdClusterService {
      *
      * @return [ListenableFuture] of [MemberListResponse]
      */
-    fun listMemberFuture(): ListenableFuture<MemberListResponse>
+    fun listMemberInFuture(): ListenableFuture<MemberListResponse>
 
     /**
      * Lists the current cluster membership (asynchronously).
@@ -50,7 +50,7 @@ interface EtcdClusterService {
      * @param peerAddresses The **peer** address of the new member.
      * @return [ListenableFuture] of [MemberAddResponse]
      */
-    fun addMemberFuture(peerAddresses: Array<Endpoint>): ListenableFuture<MemberAddResponse>
+    fun addMemberInFuture(peerAddresses: Array<Endpoint>): ListenableFuture<MemberAddResponse>
 
     /**
      * Add a new member into the cluster (asynchronously).
@@ -74,7 +74,7 @@ interface EtcdClusterService {
      * @param memberId The id of the member to remove.
      * @return [ListenableFuture] of [MemberRemoveResponse]
      */
-    fun removeMemberFuture(memberId: Long): ListenableFuture<MemberRemoveResponse>
+    fun removeMemberInFuture(memberId: Long): ListenableFuture<MemberRemoveResponse>
 
     /**
      *  Remove an existing member from the cluster (blocking).
@@ -100,7 +100,7 @@ interface EtcdClusterService {
      * @param peerAddresses The new **peer** address of the member.
      * @return [ListenableFuture] of [MemberUpdateResponse]
      */
-    fun updateMemberFuture(memberId: Long, peerAddresses: Array<Endpoint>): ListenableFuture<MemberUpdateResponse>
+    fun updateMemberInFuture(memberId: Long, peerAddresses: Array<Endpoint>): ListenableFuture<MemberUpdateResponse>
 
     /**
      * Update peer address of the member (asynchronously).
