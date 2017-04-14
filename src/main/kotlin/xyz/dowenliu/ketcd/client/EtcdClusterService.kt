@@ -69,6 +69,14 @@ interface EtcdClusterService {
     fun removeMember(memberId: Long): MemberRemoveResponse
 
     /**
+     * Remove an existing member from the cluster as future.
+     *
+     * @param memberId The id of the member to remove.
+     * @return [ListenableFuture] of [MemberRemoveResponse]
+     */
+    fun removeMemberFuture(memberId: Long): ListenableFuture<MemberRemoveResponse>
+
+    /**
      *  Remove an existing member from the cluster (blocking).
      *
      *  @param memberId The id of the member to remove.

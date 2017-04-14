@@ -73,6 +73,9 @@ class EtcdClusterServiceImpl internal constructor(val channel: ManagedChannel, v
     override fun removeMember(memberId: Long): MemberRemoveResponse =
             blockingStub.memberRemove(MemberRemoveRequest.newBuilder().setID(memberId).build())
 
+    override fun removeMemberFuture(memberId: Long): ListenableFuture<MemberRemoveResponse> =
+            futureStub.memberRemove(MemberRemoveRequest.newBuilder().setID(memberId).build())
+
     override fun removeMemberAsync(memberId: Long, callback: ResponseCallback<MemberRemoveResponse>) =
             asyncStub.memberRemove(MemberRemoveRequest.newBuilder().setID(memberId).build(),
                     object : StreamObserver<MemberRemoveResponse> {
