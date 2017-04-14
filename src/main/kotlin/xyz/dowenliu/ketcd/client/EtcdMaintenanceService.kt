@@ -69,7 +69,7 @@ interface EtcdMaintenanceService {
      * @param member The raised alarm to deactive.
      * @param callback A [DeactiveAlarmCallback] instance to handle the response.
      */
-    fun deactiveAlarm(member: AlarmMember, callback: DeactiveAlarmCallback)
+    fun deactiveAlarmAsync(member: AlarmMember, callback: DeactiveAlarmCallback)
 
     /**
      * Callback when deactive alarm response received.
