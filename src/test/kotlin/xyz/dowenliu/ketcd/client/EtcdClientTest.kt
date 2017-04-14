@@ -31,4 +31,9 @@ class EtcdClientTest {
     fun testNewMaintenanceService() {
         assertion.assertTrue(etcdClient.newMaintenanceService() is EtcdMaintenanceServiceImpl)
     }
+
+    @Test
+    fun testNewClusterService() {
+        assertion.assertTrue(etcdClient.newClusterService() is EtcdClusterServiceImpl)
+    }
 }
