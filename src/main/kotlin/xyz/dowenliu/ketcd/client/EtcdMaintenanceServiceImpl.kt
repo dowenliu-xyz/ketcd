@@ -59,6 +59,9 @@ class EtcdMaintenanceServiceImpl internal constructor(val channel: ManagedChanne
 
     override fun deactiveAlarm(member: AlarmMember): AlarmResponse = blockingStub.alarm(deactiveAlarmRequest(member))
 
+    override fun deactiveAlarmFuture(member: AlarmMember): ListenableFuture<AlarmResponse> =
+            futureStub.alarm(deactiveAlarmRequest(member))
+
     override fun deactiveAlarmAsync(member: AlarmMember, callback: ResponseCallback<AlarmResponse>) =
             asyncStub.alarm(deactiveAlarmRequest(member), object : StreamObserver<AlarmResponse> {
                 override fun onNext(value: AlarmResponse?) {

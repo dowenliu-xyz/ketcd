@@ -54,6 +54,14 @@ interface EtcdMaintenanceService {
     fun deactiveAlarm(member: AlarmMember): AlarmResponse
 
     /**
+     * Deactive a raised alarm as future.
+     *
+     * @param member The raised alarm to deactive.
+     * @return [ListenableFuture] of [AlarmResponse]
+     */
+    fun deactiveAlarmFuture(member: AlarmMember): ListenableFuture<AlarmResponse>
+
+    /**
      * Deactive a raised alarm (asynchronously).
      * @param member The raised alarm to deactive.
      * @param callback A [ResponseCallback] instance to handle the response.
