@@ -83,4 +83,20 @@ class EtcdMaintenanceServiceImpl internal constructor(val channel: ManagedChanne
 
                 override fun onCompleted() = callback.completeCallback()
             })
+
+    override fun statusMember(): StatusResponse = blockingStub.status(StatusRequest.getDefaultInstance())
+
+    override fun statusMemberAsync(callback: ResponseCallback<StatusResponse>) {
+        asyncStub.status(StatusRequest.getDefaultInstance(), object : StreamObserver<StatusResponse> {
+            override fun onNext(value: StatusResponse?) {
+                value?.let { callback.onResponse(it) }
+            }
+
+            override fun onError(t: Throwable?) {
+                t?.let { callback.onError(it) }
+            }
+
+            override fun onCompleted() = callback.completeCallback()
+        })
+    }
 }

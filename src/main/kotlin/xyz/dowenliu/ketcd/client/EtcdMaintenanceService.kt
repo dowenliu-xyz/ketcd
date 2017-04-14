@@ -3,6 +3,7 @@ package xyz.dowenliu.ketcd.client
 import xyz.dowenliu.ketcd.api.AlarmMember
 import xyz.dowenliu.ketcd.api.AlarmResponse
 import xyz.dowenliu.ketcd.api.DefragmentResponse
+import xyz.dowenliu.ketcd.api.StatusResponse
 
 /**
  * Interface of maintenance service talking to etcd.
@@ -83,17 +84,17 @@ interface EtcdMaintenanceService {
      */
     fun defragmentMemberAsync(callback: ResponseCallback<DefragmentResponse>)
 
-//    /**
-//     * Get the status of one member (blocking).
-//     *
-//     * @return [StatusResponse]
-//     */
-//    fun statusMember(): StatusResponse
-//
-//    /**
-//     * Get the status of one member (asynchronously).
-//     *
-//     * @param callback A [ResponseCallback] instance to handle the response.
-//     */
-//    fun statusMember(callback: ResponseCallback<StatusResponse>)
+    /**
+     * Get the status of one member (blocking).
+     *
+     * @return [StatusResponse]
+     */
+    fun statusMember(): StatusResponse
+
+    /**
+     * Get the status of one member (asynchronously).
+     *
+     * @param callback A [ResponseCallback] instance to handle the response.
+     */
+    fun statusMemberAsync(callback: ResponseCallback<StatusResponse>)
 }
