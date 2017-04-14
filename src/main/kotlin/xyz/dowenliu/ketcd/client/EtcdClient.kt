@@ -52,6 +52,8 @@ class EtcdClient(val channelBuilder: ManagedChannelBuilder<*>,
                 )
     }
 
+    fun newMaintenanceService(): EtcdMaintenanceService = EtcdMaintenanceServiceImpl(channelBuilder.build(), token)
+
     class Builder internal constructor() {
         private val _endpoints: MutableList<Endpoint> = mutableListOf()
         /**
