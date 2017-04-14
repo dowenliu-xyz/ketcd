@@ -1,5 +1,6 @@
 package xyz.dowenliu.ketcd.client
 
+import com.google.common.util.concurrent.ListenableFuture
 import xyz.dowenliu.ketcd.api.AlarmMember
 import xyz.dowenliu.ketcd.api.AlarmResponse
 import xyz.dowenliu.ketcd.api.DefragmentResponse
@@ -29,6 +30,13 @@ interface EtcdMaintenanceService {
      * @return [AlarmResponse]
      */
     fun listAlarms(): AlarmResponse
+
+    /**
+     * Get all active keyspace alarms as future.
+     *
+     * @return [ListenableFuture] of [AlarmResponse]
+     */
+    fun listAlarmsFuture(): ListenableFuture<AlarmResponse>
 
     /**
      * Get all active keyspace alarms (asynchronously).

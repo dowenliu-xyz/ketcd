@@ -1,5 +1,6 @@
 package xyz.dowenliu.ketcd.client
 
+import com.google.common.util.concurrent.ListenableFuture
 import io.grpc.ManagedChannel
 import io.grpc.stub.StreamObserver
 import xyz.dowenliu.ketcd.api.*
@@ -15,6 +16,7 @@ import java.io.Closeable
 class EtcdMaintenanceServiceImpl internal constructor(val channel: ManagedChannel, val token: String?) :
         EtcdMaintenanceService, Closeable {
     private val blockingStub = configureStub(MaintenanceGrpc.newBlockingStub(channel), token)
+    private val futureStub = configureStub(MaintenanceGrpc.newFutureStub(channel), token)
     private val asyncStub = configureStub(MaintenanceGrpc.newStub(channel), token)
 
     override fun close() {
@@ -28,6 +30,8 @@ class EtcdMaintenanceServiceImpl internal constructor(val channel: ManagedChanne
             .build()
 
     override fun listAlarms(): AlarmResponse = blockingStub.alarm(listAlarmsRequest())
+
+    override fun listAlarmsFuture(): ListenableFuture<AlarmResponse> = futureStub.alarm(listAlarmsRequest())
 
     override fun listAlarmsAsync(callback: ResponseCallback<AlarmResponse>) =
             asyncStub.alarm(listAlarmsRequest(), object : StreamObserver<AlarmResponse> {
