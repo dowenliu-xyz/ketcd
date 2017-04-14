@@ -1,5 +1,6 @@
 package xyz.dowenliu.ketcd.client
 
+import com.google.common.util.concurrent.ListenableFuture
 import xyz.dowenliu.ketcd.Endpoint
 import xyz.dowenliu.ketcd.api.MemberAddResponse
 import xyz.dowenliu.ketcd.api.MemberListResponse
@@ -20,6 +21,13 @@ interface EtcdClusterService {
      * @return [MemberListResponse]
      */
     fun listMember(): MemberListResponse
+
+    /**
+     * Lists the current cluster membership as future.
+     *
+     * @return [ListenableFuture] of [MemberListResponse]
+     */
+    fun listMemberFuture(): ListenableFuture<MemberListResponse>
 
     /**
      * Lists the current cluster membership (asynchronously).

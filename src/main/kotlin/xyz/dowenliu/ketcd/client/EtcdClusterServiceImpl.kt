@@ -1,5 +1,6 @@
 package xyz.dowenliu.ketcd.client
 
+import com.google.common.util.concurrent.ListenableFuture
 import io.grpc.ManagedChannel
 import io.grpc.stub.StreamObserver
 import xyz.dowenliu.ketcd.Endpoint
@@ -18,6 +19,7 @@ import java.util.stream.Collectors
 class EtcdClusterServiceImpl internal constructor(val channel: ManagedChannel, val token: String?) :
         EtcdClusterService, Closeable {
     private val blockingStub = configureStub(ClusterGrpc.newBlockingStub(channel), token)
+    private val futureStub = configureStub(ClusterGrpc.newFutureStub(channel), token)
     private val asyncStub = configureStub(ClusterGrpc.newStub(channel), token)
 
     override fun close() {
@@ -25,6 +27,9 @@ class EtcdClusterServiceImpl internal constructor(val channel: ManagedChannel, v
     }
 
     override fun listMember(): MemberListResponse = blockingStub.memberList(MemberListRequest.getDefaultInstance())
+
+    override fun listMemberFuture(): ListenableFuture<MemberListResponse> =
+            futureStub.memberList(MemberListRequest.getDefaultInstance())
 
     override fun listMemberAsync(callback: ResponseCallback<MemberListResponse>) =
             asyncStub.memberList(MemberListRequest.getDefaultInstance(), object : StreamObserver<MemberListResponse> {
