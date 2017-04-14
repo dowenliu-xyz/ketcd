@@ -46,10 +46,10 @@ class EtcdMaintenanceServiceImplTest {
 
     @Test
     fun testListAlarmsAsync() {
-        val responseRef  = AtomicReference<AlarmResponse?>()
+        val responseRef = AtomicReference<AlarmResponse?>()
         val errorRef = AtomicReference<Throwable?>()
         val finishLatch = CountDownLatch(1)
-        service.listAlarmsAsync(object : EtcdMaintenanceService.AlarmListCallback {
+        service.listAlarmsAsync(object : ResponseCallback<AlarmResponse> {
             override fun onResponse(response: AlarmResponse) {
                 responseRef.set(response)
                 logger.debug("Alarm response received.")
@@ -96,7 +96,7 @@ class EtcdMaintenanceServiceImplTest {
         val responseRef = AtomicReference<DefragmentResponse?>()
         val errorRef = AtomicReference<Throwable?>()
         val finishLatch = CountDownLatch(1)
-        service.defragmentMemberAsync(object : EtcdMaintenanceService.DefragmentCallback {
+        service.defragmentMemberAsync(object : ResponseCallback<DefragmentResponse> {
             override fun onResponse(response: DefragmentResponse) {
                 responseRef.set(response)
                 logger.debug("Defragment response received.")

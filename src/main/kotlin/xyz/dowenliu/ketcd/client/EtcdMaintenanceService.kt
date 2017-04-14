@@ -32,31 +32,10 @@ interface EtcdMaintenanceService {
     /**
      * Get all active keyspace alarms (asynchronously).
      *
-     * @param callback A [AlarmListCallback] instance to handle the response.
+     * @param callback A [ResponseCallback] instance to handle the response.
      */
-    fun listAlarmsAsync(callback: AlarmListCallback)
+    fun listAlarmsAsync(callback: ResponseCallback<AlarmResponse>)
 
-    /**
-     * Callback when list alarm response received.
-     */
-    interface AlarmListCallback {
-        /**
-         * Handle response received.
-         *
-         * @param response The response received.
-         */
-        fun onResponse(response: AlarmResponse)
-
-        /**
-         * When exception caught
-         */
-        fun onError(throwable: Throwable)
-
-        /**
-         * To complete this callback
-         */
-        fun completeCallback()
-    }
     /**
      * Deactive a raised alarm (blocking).
      *
@@ -68,31 +47,9 @@ interface EtcdMaintenanceService {
     /**
      * Deactive a raised alarm (asynchronously).
      * @param member The raised alarm to deactive.
-     * @param callback A [DeactiveAlarmCallback] instance to handle the response.
+     * @param callback A [ResponseCallback] instance to handle the response.
      */
-    fun deactiveAlarmAsync(member: AlarmMember, callback: DeactiveAlarmCallback)
-
-    /**
-     * Callback when deactive alarm response received.
-     */
-    interface DeactiveAlarmCallback {
-        /**
-         * Handle response received.
-         *
-         * @param response The response received.
-         */
-        fun onResponse(response: AlarmResponse)
-
-        /**
-         * When exception caught
-         */
-        fun onError(throwable: Throwable)
-
-        /**
-         * To complete this callback
-         */
-        fun completeCallback()
-    }
+    fun deactiveAlarmAsync(member: AlarmMember, callback: ResponseCallback<AlarmResponse>)
 
     /**
      * Defragment one member of the cluster.
@@ -122,29 +79,21 @@ interface EtcdMaintenanceService {
      * To defragment multiple members in the cluster, user need to call defragment multiple times with different
      * endpoints.
      *
-     * @param callback A [DefragmentCallback] instance handle the response.
+     * @param callback A [ResponseCallback] instance to handle the response.
      */
-    fun defragmentMemberAsync(callback: DefragmentCallback)
+    fun defragmentMemberAsync(callback: ResponseCallback<DefragmentResponse>)
 
-    /**
-     * Callback when defragment response received.
-     */
-    interface DefragmentCallback {
-        /**
-         * Handle response received.
-         *
-         * @param response The response received.
-         */
-        fun onResponse(response: DefragmentResponse)
-
-        /**
-         * When exception caught
-         */
-        fun onError(throwable: Throwable)
-
-        /**
-         * To complete this callback
-         */
-        fun completeCallback()
-    }
+//    /**
+//     * Get the status of one member (blocking).
+//     *
+//     * @return [StatusResponse]
+//     */
+//    fun statusMember(): StatusResponse
+//
+//    /**
+//     * Get the status of one member (asynchronously).
+//     *
+//     * @param callback A [ResponseCallback] instance to handle the response.
+//     */
+//    fun statusMember(callback: ResponseCallback<StatusResponse>)
 }
