@@ -8,6 +8,7 @@ import org.testng.annotations.Test
 import org.testng.asserts.Assertion
 import xyz.dowenliu.ketcd.Endpoint
 import xyz.dowenliu.ketcd.api.AlarmResponse
+import xyz.dowenliu.ketcd.api.DefragmentResponse
 import xyz.dowenliu.ketcd.endpoints
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
@@ -52,16 +53,15 @@ class EtcdMaintenanceServiceImplTest {
             override fun onResponse(response: AlarmResponse) {
                 responseRef.set(response)
                 logger.debug("Alarm response received.")
-                finishLatch.countDown()
             }
 
             override fun onError(throwable: Throwable) {
                 errorRef.set(throwable)
-                finishLatch.countDown()
             }
 
             override fun completeCallback() {
                 logger.debug("Asynchronous listing alarms complete.")
+                finishLatch.countDown()
             }
         })
         finishLatch.await(10, TimeUnit.SECONDS)
@@ -83,5 +83,42 @@ class EtcdMaintenanceServiceImplTest {
     @Test(enabled = false)
     fun testDeactiveAlarmAsync() {
         // TEST_THIS how to test deactiveAlarmAsync()?
+    }
+
+    @Test
+    fun testDefragmentMember() {
+        val response = service.defragmentMember()
+        assertion.assertNotNull(response.header)
+    }
+
+    @Test
+    fun testDefragmentMemberAsync() {
+        val responseRef = AtomicReference<DefragmentResponse?>()
+        val errorRef = AtomicReference<Throwable?>()
+        val finishLatch = CountDownLatch(1)
+        service.defragmentMemberAsync(object : EtcdMaintenanceService.DefragmentCallback {
+            override fun onResponse(response: DefragmentResponse) {
+                responseRef.set(response)
+                logger.debug("Defragment response received.")
+            }
+
+            override fun onError(throwable: Throwable) {
+                errorRef.set(throwable)
+            }
+
+            override fun completeCallback() {
+                logger.debug("Asynchronous member defragmentation complete.")
+                finishLatch.countDown()
+            }
+        })
+        finishLatch.await(10, TimeUnit.SECONDS)
+        val response = responseRef.get()
+        val throwable = errorRef.get()
+        assertion.assertTrue(response != null || throwable != null)
+        if (response != null) {
+            assertion.assertNotNull(response.header)
+        } else {
+            throw throwable!!
+        }
     }
 }
