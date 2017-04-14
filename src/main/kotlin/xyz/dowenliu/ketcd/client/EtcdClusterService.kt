@@ -94,6 +94,15 @@ interface EtcdClusterService {
     fun updateMember(memberId: Long, peerAddresses: Array<Endpoint>): MemberUpdateResponse
 
     /**
+     * Update peer address of the member as future.
+     *
+     * @param memberId The id of the member to update.
+     * @param peerAddresses The new **peer** address of the member.
+     * @return [ListenableFuture] of [MemberUpdateResponse]
+     */
+    fun updateMemberFuture(memberId: Long, peerAddresses: Array<Endpoint>): ListenableFuture<MemberUpdateResponse>
+
+    /**
      * Update peer address of the member (asynchronously).
      *
      * @param memberId The id of the member to update.

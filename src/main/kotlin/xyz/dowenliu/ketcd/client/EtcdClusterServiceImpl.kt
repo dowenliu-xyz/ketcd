@@ -101,6 +101,10 @@ class EtcdClusterServiceImpl internal constructor(val channel: ManagedChannel, v
     override fun updateMember(memberId: Long, peerAddresses: Array<Endpoint>): MemberUpdateResponse =
             blockingStub.memberUpdate(updateMemberRequest(memberId, peerAddresses))
 
+    override fun updateMemberFuture(memberId: Long, peerAddresses: Array<Endpoint>):
+            ListenableFuture<MemberUpdateResponse> =
+            futureStub.memberUpdate(updateMemberRequest(memberId, peerAddresses))
+
     override fun updateMemberAsync(memberId: Long, peerAddresses: Array<Endpoint>,
                                    callback: ResponseCallback<MemberUpdateResponse>) =
             asyncStub.memberUpdate(updateMemberRequest(memberId, peerAddresses),
