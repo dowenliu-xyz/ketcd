@@ -78,6 +78,9 @@ class EtcdMaintenanceServiceImpl internal constructor(val channel: ManagedChanne
     override fun defragmentMember(): DefragmentResponse =
             blockingStub.defragment(DefragmentRequest.getDefaultInstance())
 
+    override fun defragmentMemberFuture(): ListenableFuture<DefragmentResponse> =
+            futureStub.defragment(DefragmentRequest.getDefaultInstance())
+
     override fun defragmentMemberAsync(callback: ResponseCallback<DefragmentResponse>) =
             asyncStub.defragment(DefragmentRequest.getDefaultInstance(), object : StreamObserver<DefragmentResponse> {
                 override fun onNext(value: DefragmentResponse?) {

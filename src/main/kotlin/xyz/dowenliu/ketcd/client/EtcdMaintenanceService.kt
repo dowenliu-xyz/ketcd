@@ -69,7 +69,7 @@ interface EtcdMaintenanceService {
     fun deactiveAlarmAsync(member: AlarmMember, callback: ResponseCallback<AlarmResponse>)
 
     /**
-     * Defragment one member of the cluster.
+     * Defragment one member of the cluster (blocking).
      *
      * After compacting the keyspace, the backend database may exhibit internal fragmentation. Any internal
      * fragmentation is space that is free to use by the backend but still consumes storage space. The process
@@ -85,7 +85,23 @@ interface EtcdMaintenanceService {
     fun defragmentMember(): DefragmentResponse
 
     /**
-     * Defragment one member of the cluster.
+     * Defragment one member of the cluster as future.
+     *
+     * After compacting the keyspace, the backend database may exhibit internal fragmentation. Any internal
+     * fragmentation is space that is free to use by the backend but still consumes storage space. The process
+     * of defragmentation releases this storage space back to the file system. Defragmentation is issued on a
+     * per-member so that cluster-wide latency spikes may be avoided.
+     *
+     * Defragment is an expensive operation. User should avoid defragmenting multiple members at the same time.
+     * To defragment multiple members in the cluster, user need to call defragment multiple times with different
+     * endpoints.
+     *
+     * @return [ListenableFuture] of [DefragmentResponse]
+     */
+    fun defragmentMemberFuture(): ListenableFuture<DefragmentResponse>
+
+    /**
+     * Defragment one member of the cluster (asynchronously).
      *
      * After compacting the keyspace, the backend database may exhibit internal fragmentation. Any internal
      * fragmentation is space that is free to use by the backend but still consumes storage space. The process
