@@ -9,7 +9,9 @@ import org.testng.asserts.Assertion
 import xyz.dowenliu.ketcd.Endpoint
 import xyz.dowenliu.ketcd.api.AlarmResponse
 import xyz.dowenliu.ketcd.api.DefragmentResponse
+import xyz.dowenliu.ketcd.api.StatusResponse
 import xyz.dowenliu.ketcd.endpoints
+import xyz.dowenliu.ketcd.version.EtcdVersion
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicReference
@@ -117,6 +119,51 @@ class EtcdMaintenanceServiceImplTest {
         assertion.assertTrue(response != null || throwable != null)
         if (response != null) {
             assertion.assertNotNull(response.header)
+        } else {
+            throw throwable!!
+        }
+    }
+
+    @Test(groups = arrayOf("Maintenance.status"))
+    fun testStatusMember() {
+        val response = service.statusMember()
+        assertion.assertNotNull(response.header)
+        val version = response.version
+        logger.info(version)
+        assertion.assertTrue(version.startsWith("3."))
+        assertion.assertNotNull(EtcdVersion.ofValue(version))
+    }
+
+    @Test
+    fun testStatusMemberAsync() {
+        val responseRef = AtomicReference<StatusResponse?>()
+        val errorRef = AtomicReference<Throwable?>()
+        val finishLatch = CountDownLatch(1)
+        service.statusMemberAsync(object : ResponseCallback<StatusResponse> {
+            override fun onResponse(response: StatusResponse) {
+                responseRef.set(response)
+                logger.debug("Status response received.")
+            }
+
+            override fun onError(throwable: Throwable) {
+                errorRef.set(throwable)
+            }
+
+            override fun completeCallback() {
+                logger.debug("Asynchronous member status complete.")
+                finishLatch.countDown()
+            }
+        })
+        finishLatch.await(10, TimeUnit.SECONDS)
+        val response = responseRef.get()
+        val throwable = errorRef.get()
+        assertion.assertTrue(response != null || throwable != null)
+        if (response != null) {
+            assertion.assertNotNull(response.header)
+            val version = response.version
+            logger.info(version)
+            assertion.assertTrue(version.startsWith("3."))
+            assertion.assertNotNull(EtcdVersion.ofValue(version))
         } else {
             throw throwable!!
         }
