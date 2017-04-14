@@ -96,6 +96,9 @@ class EtcdMaintenanceServiceImpl internal constructor(val channel: ManagedChanne
 
     override fun statusMember(): StatusResponse = blockingStub.status(StatusRequest.getDefaultInstance())
 
+    override fun statusMemberFuture(): ListenableFuture<StatusResponse> =
+            futureStub.status(StatusRequest.getDefaultInstance())
+
     override fun statusMemberAsync(callback: ResponseCallback<StatusResponse>) {
         asyncStub.status(StatusRequest.getDefaultInstance(), object : StreamObserver<StatusResponse> {
             override fun onNext(value: StatusResponse?) {

@@ -124,6 +124,13 @@ interface EtcdMaintenanceService {
     fun statusMember(): StatusResponse
 
     /**
+     * Get the status of one member as future.
+     *
+     * @return [ListenableFuture] of [StatusResponse]
+     */
+    fun statusMemberFuture(): ListenableFuture<StatusResponse>
+
+    /**
      * Get the status of one member (asynchronously).
      *
      * @param callback A [ResponseCallback] instance to handle the response.
