@@ -1,5 +1,6 @@
 package xyz.dowenliu.ketcd.client
 
+import xyz.dowenliu.ketcd.api.AlarmMember
 import xyz.dowenliu.ketcd.api.AlarmResponse
 
 /**
@@ -38,6 +39,42 @@ interface EtcdMaintenanceService {
      * Callback when list alarm response received.
      */
     interface AlarmListCallback {
+        /**
+         * Handle response received.
+         *
+         * @param response The response received.
+         */
+        fun onResponse(response: AlarmResponse)
+
+        /**
+         * When exception caught
+         */
+        fun onError(throwable: Throwable)
+
+        /**
+         * To complete this callback
+         */
+        fun completeCallback()
+    }
+    /**
+     * Deactive a raised alarm (blocking).
+     *
+     * @param member The raised alarm to deactive.
+     * @return [AlarmResponse]
+     */
+    fun deactiveAlarm(member: AlarmMember): AlarmResponse
+
+    /**
+     * Deactive a raised alarm (asynchronously).
+     * @param member The raised alarm to deactive.
+     * @param callback A [DeactiveAlarmCallback] instance to handle the response.
+     */
+    fun deactiveAlarm(member: AlarmMember, callback: DeactiveAlarmCallback)
+
+    /**
+     * Callback when deactive alarm response received.
+     */
+    interface DeactiveAlarmCallback {
         /**
          * Handle response received.
          *
