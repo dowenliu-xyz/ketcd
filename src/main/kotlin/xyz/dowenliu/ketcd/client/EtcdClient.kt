@@ -56,7 +56,7 @@ class EtcdClient(val channelBuilder: ManagedChannelBuilder<*>,
                                 .build()
                 )
 
-        @JvmStatic val knowVersion: AtomicReference<EtcdVersion?> = AtomicReference()
+        internal val knowVersion: AtomicReference<EtcdVersion?> = AtomicReference()
     }
 
     init {
