@@ -54,6 +54,9 @@ class EtcdClusterServiceImpl internal constructor(val channel: ManagedChannel, v
     override fun addMember(peerAddresses: Array<Endpoint>): MemberAddResponse =
             blockingStub.memberAdd(addMemberRequest(peerAddresses))
 
+    override fun addMemberFuture(peerAddresses: Array<Endpoint>): ListenableFuture<MemberAddResponse> =
+            futureStub.memberAdd(addMemberRequest(peerAddresses))
+
     override fun addMemberAsync(peerAddresses: Array<Endpoint>, callback: ResponseCallback<MemberAddResponse>) =
             asyncStub.memberAdd(addMemberRequest(peerAddresses), object : StreamObserver<MemberAddResponse> {
                 override fun onNext(value: MemberAddResponse?) {

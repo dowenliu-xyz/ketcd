@@ -45,6 +45,14 @@ interface EtcdClusterService {
     fun addMember(peerAddresses: Array<Endpoint>): MemberAddResponse
 
     /**
+     * Add a new member into the cluster as future.
+     *
+     * @param peerAddresses The **peer** address of the new member.
+     * @return [ListenableFuture] of [MemberAddResponse]
+     */
+    fun addMemberFuture(peerAddresses: Array<Endpoint>): ListenableFuture<MemberAddResponse>
+
+    /**
      * Add a new member into the cluster (asynchronously).
      *
      * @param peerAddresses The **peer** address of the new member.
