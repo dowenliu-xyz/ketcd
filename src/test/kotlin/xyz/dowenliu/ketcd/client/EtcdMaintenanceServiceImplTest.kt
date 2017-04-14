@@ -105,6 +105,12 @@ class EtcdMaintenanceServiceImplTest {
     }
 
     @Test
+    fun testDefragmentMemberFuture() {
+        val response = service.defragmentMemberFuture().get(5, TimeUnit.SECONDS)
+        assertion.assertNotNull(response.header)
+    }
+
+    @Test
     fun testDefragmentMemberAsync() {
         val responseRef = AtomicReference<DefragmentResponse?>()
         val errorRef = AtomicReference<Throwable?>()
