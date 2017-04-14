@@ -47,6 +47,12 @@ class EtcdMaintenanceServiceImplTest {
     }
 
     @Test
+    fun testListAlarmsFuture() {
+        val response = service.listAlarmsFuture().get(5, TimeUnit.SECONDS)
+        assertion.assertNotNull(response.header)
+    }
+
+    @Test
     fun testListAlarmsAsync() {
         val responseRef = AtomicReference<AlarmResponse?>()
         val errorRef = AtomicReference<Throwable?>()
