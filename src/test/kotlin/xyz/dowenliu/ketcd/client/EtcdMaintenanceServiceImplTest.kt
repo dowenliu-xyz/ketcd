@@ -151,7 +151,17 @@ class EtcdMaintenanceServiceImplTest {
         assertion.assertNotNull(EtcdVersion.ofValue(version))
     }
 
-    @Test
+    @Test(groups = arrayOf("Maintenance.status"))
+    fun testStatusMemberFuture() {
+        val response = service.statusMemberFuture().get(5, TimeUnit.SECONDS)
+        assertion.assertNotNull(response.header)
+        val version = response.version
+        logger.info(version)
+        assertion.assertTrue(version.startsWith("3."))
+        assertion.assertNotNull(EtcdVersion.ofValue(version))
+    }
+
+    @Test(groups = arrayOf("Maintenance.status"))
     fun testStatusMemberAsync() {
         val responseRef = AtomicReference<StatusResponse?>()
         val errorRef = AtomicReference<Throwable?>()
