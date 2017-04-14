@@ -2,8 +2,6 @@ package xyz.dowenliu.ketcd.client
 
 import io.grpc.ManagedChannel
 import io.grpc.stub.StreamObserver
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import xyz.dowenliu.ketcd.api.AlarmRequest
 import xyz.dowenliu.ketcd.api.AlarmResponse
 import xyz.dowenliu.ketcd.api.AlarmType
@@ -19,7 +17,6 @@ import java.io.Closeable
  */
 class EtcdMaintenanceServiceImpl internal constructor(val channel: ManagedChannel, val token: String?) :
         EtcdMaintenanceService, Closeable {
-    private val logger: Logger = LoggerFactory.getLogger(javaClass)
     private val blockingStub = configureStub(MaintenanceGrpc.newBlockingStub(channel), token)
     private val asyncStub = configureStub(MaintenanceGrpc.newStub(channel), token)
 
@@ -45,9 +42,7 @@ class EtcdMaintenanceServiceImpl internal constructor(val channel: ManagedChanne
                 t?.let { callback.onError(it) }
             }
 
-            override fun onCompleted() {
-                logger.debug("Asynchronous listing alarms completed.")
-            }
+            override fun onCompleted() = callback.completeCallback()
         })
     }
 }

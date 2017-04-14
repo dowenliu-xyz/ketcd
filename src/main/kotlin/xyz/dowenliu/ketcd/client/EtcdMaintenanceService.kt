@@ -49,5 +49,10 @@ interface EtcdMaintenanceService {
          * When exception caught
          */
         fun onError(throwable: Throwable)
+
+        /**
+         * To complete this callback
+         */
+        fun completeCallback()
     }
 }
