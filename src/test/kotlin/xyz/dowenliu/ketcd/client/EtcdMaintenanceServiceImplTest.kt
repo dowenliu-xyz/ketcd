@@ -89,6 +89,11 @@ class EtcdMaintenanceServiceImplTest {
     }
 
     @Test(enabled = false)
+    fun testDeactiveAlarmFuture() {
+        // TEST_THIS how to test deactiveAlarmFuture()?
+    }
+
+    @Test(enabled = false)
     fun testDeactiveAlarmAsync() {
         // TEST_THIS how to test deactiveAlarmAsync()?
     }
