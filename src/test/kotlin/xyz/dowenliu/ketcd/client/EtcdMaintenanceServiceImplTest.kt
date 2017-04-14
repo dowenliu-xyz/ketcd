@@ -74,4 +74,14 @@ class EtcdMaintenanceServiceImplTest {
             throw throwable!!
         }
     }
+
+    @Test(enabled = false)
+    fun testDeactiveAlarm() {
+        // TEST_THIS how to test deactiveAlarm()?
+    }
+
+    @Test(enabled = false)
+    fun testDeactiveAlarmAsync() {
+        // TEST_THIS how to test deactiveAlarmAsync()?
+    }
 }
