@@ -2,7 +2,6 @@ package xyz.dowenliu.ketcd.client
 
 import io.grpc.ManagedChannel
 import io.grpc.ManagedChannelBuilder
-import io.grpc.util.RoundRobinLoadBalancerFactory
 import xyz.dowenliu.ketcd.Endpoint
 import xyz.dowenliu.ketcd.UsernamePassword
 import xyz.dowenliu.ketcd.api.AuthGrpc
@@ -51,12 +50,10 @@ class EtcdClient(val channelBuilder: ManagedChannelBuilder<*>,
                                 .setPasswordBytes(usernamePassword.password)
                                 .build()
                 )
-
-        private val rbLoadBalanceFactory = RoundRobinLoadBalancerFactory.getInstance()
     }
 
     fun newMaintenanceService(): EtcdMaintenanceService =
-            EtcdMaintenanceServiceImpl(channelBuilder.loadBalancerFactory(rbLoadBalanceFactory).build(), token)
+            EtcdMaintenanceServiceImpl(channelBuilder.build(), token)
 
     class Builder internal constructor() {
         private val _endpoints: MutableList<Endpoint> = mutableListOf()
