@@ -97,4 +97,6 @@ interface EtcdMaintenanceService {
      * @param callback A [ResponseCallback] instance to handle the response.
      */
     fun statusMemberAsync(callback: ResponseCallback<StatusResponse>)
+
+    // TODO add snapshot operation.
 }
