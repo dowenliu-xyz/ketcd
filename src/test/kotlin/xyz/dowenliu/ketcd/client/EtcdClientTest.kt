@@ -12,14 +12,20 @@ import xyz.dowenliu.ketcd.endpoints
  */
 class EtcdClientTest {
     private val assertion = Assertion()
+    private val etcdClient = EtcdClient.newBuilder()
+            .withEndpoint(*endpoints.map { Endpoint.of(it) }.toTypedArray())
+            .build()
 
     @Test
     fun test() {
-        val etcdClient = EtcdClient.newBuilder().withEndpoint(*endpoints.map { Endpoint.of(it) }.toTypedArray()).build()
-
         val build1 = etcdClient.channelBuilder.build()
         val build2 = etcdClient.channelBuilder.build()
 
         assertion.assertNotSame(build1, build2)
+    }
+
+    @Test
+    fun testNewMaintenanceService() {
+        assertion.assertTrue(etcdClient.newMaintenanceService() is EtcdMaintenanceServiceImpl)
     }
 }
