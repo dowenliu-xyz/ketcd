@@ -17,9 +17,12 @@ import java.util.concurrent.ExecutionException
  * create at 2017/4/13
  * @author liufl
  * @since 0.1.0
+ *
+ * @property channelBuilder Build [ManagedChannel] for stubs used in any gRPC base service this client create.
+ * @property token Etcd server side authentication token.
  */
-class EtcdClient(private val channelBuilder: ManagedChannelBuilder<*>,
-                 private val token: String?) {
+class EtcdClient(val channelBuilder: ManagedChannelBuilder<*>,
+                 val token: String?) {
     companion object {
         /**
          * Creates new Builder instance.
