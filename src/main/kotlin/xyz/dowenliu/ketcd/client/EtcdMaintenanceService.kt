@@ -2,6 +2,7 @@ package xyz.dowenliu.ketcd.client
 
 import xyz.dowenliu.ketcd.api.AlarmMember
 import xyz.dowenliu.ketcd.api.AlarmResponse
+import xyz.dowenliu.ketcd.api.DefragmentResponse
 
 /**
  * Interface of maintenance service talking to etcd.
@@ -81,6 +82,60 @@ interface EtcdMaintenanceService {
          * @param response The response received.
          */
         fun onResponse(response: AlarmResponse)
+
+        /**
+         * When exception caught
+         */
+        fun onError(throwable: Throwable)
+
+        /**
+         * To complete this callback
+         */
+        fun completeCallback()
+    }
+
+    /**
+     * Defragment one member of the cluster.
+     *
+     * After compacting the keyspace, the backend database may exhibit internal fragmentation. Any internal
+     * fragmentation is space that is free to use by the backend but still consumes storage space. The process
+     * of defragmentation releases this storage space back to the file system. Defragmentation is issued on a
+     * per-member so that cluster-wide latency spikes may be avoided.
+     *
+     * Defragment is an expensive operation. User should avoid defragmenting multiple members at the same time.
+     * To defragment multiple members in the cluster, user need to call defragment multiple times with different
+     * endpoints.
+     *
+     * @return [DefragmentResponse]
+     */
+    fun defragmentMember(): DefragmentResponse
+
+    /**
+     * Defragment one member of the cluster.
+     *
+     * After compacting the keyspace, the backend database may exhibit internal fragmentation. Any internal
+     * fragmentation is space that is free to use by the backend but still consumes storage space. The process
+     * of defragmentation releases this storage space back to the file system. Defragmentation is issued on a
+     * per-member so that cluster-wide latency spikes may be avoided.
+     *
+     * Defragment is an expensive operation. User should avoid defragmenting multiple members at the same time.
+     * To defragment multiple members in the cluster, user need to call defragment multiple times with different
+     * endpoints.
+     *
+     * @param callback A [DefragmentCallback] instance handle the response.
+     */
+    fun defragmentMemberAsync(callback: DefragmentCallback)
+
+    /**
+     * Callback when defragment response received.
+     */
+    interface DefragmentCallback {
+        /**
+         * Handle response received.
+         *
+         * @param response The response received.
+         */
+        fun onResponse(response: DefragmentResponse)
 
         /**
          * When exception caught

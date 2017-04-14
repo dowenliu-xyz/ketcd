@@ -55,17 +55,32 @@ class EtcdMaintenanceServiceImpl internal constructor(val channel: ManagedChanne
 
     override fun deactiveAlarm(member: AlarmMember): AlarmResponse = blockingStub.alarm(deactiveAlarmRequest(member))
 
-    override fun deactiveAlarmAsync(member: AlarmMember, callback: EtcdMaintenanceService.DeactiveAlarmCallback) {
-        asyncStub.alarm(deactiveAlarmRequest(member), object : StreamObserver<AlarmResponse> {
-            override fun onNext(value: AlarmResponse?) {
-                value?.let { callback.onResponse(it) }
-            }
+    override fun deactiveAlarmAsync(member: AlarmMember, callback: EtcdMaintenanceService.DeactiveAlarmCallback) =
+            asyncStub.alarm(deactiveAlarmRequest(member), object : StreamObserver<AlarmResponse> {
+                override fun onNext(value: AlarmResponse?) {
+                    value?.let { callback.onResponse(it) }
+                }
 
-            override fun onError(t: Throwable?) {
-                t?.let { callback.onError(it) }
-            }
+                override fun onError(t: Throwable?) {
+                    t?.let { callback.onError(it) }
+                }
 
-            override fun onCompleted() = callback.completeCallback()
-        })
-    }
+                override fun onCompleted() = callback.completeCallback()
+            })
+
+    override fun defragmentMember(): DefragmentResponse =
+            blockingStub.defragment(DefragmentRequest.getDefaultInstance())
+
+    override fun defragmentMemberAsync(callback: EtcdMaintenanceService.DefragmentCallback) =
+            asyncStub.defragment(DefragmentRequest.getDefaultInstance(), object : StreamObserver<DefragmentResponse> {
+                override fun onNext(value: DefragmentResponse?) {
+                    value?.let { callback.onResponse(it) }
+                }
+
+                override fun onError(t: Throwable?) {
+                    t?.let { callback.onError(it) }
+                }
+
+                override fun onCompleted() = callback.completeCallback()
+            })
 }
