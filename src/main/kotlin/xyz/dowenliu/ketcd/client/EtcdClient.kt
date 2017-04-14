@@ -2,6 +2,7 @@ package xyz.dowenliu.ketcd.client
 
 import io.grpc.ManagedChannel
 import io.grpc.ManagedChannelBuilder
+import org.slf4j.LoggerFactory
 import xyz.dowenliu.ketcd.Endpoint
 import xyz.dowenliu.ketcd.UsernamePassword
 import xyz.dowenliu.ketcd.api.AuthGrpc
@@ -77,7 +78,7 @@ class EtcdClient(val channelBuilder: ManagedChannelBuilder<*>,
             }
 
             override fun onError(throwable: Throwable) {
-                throw IllegalStateException("Can not detect etcd version")
+                LoggerFactory.getLogger(javaClass).warn("Can not detect etcd version when client startup.")
             }
 
             override fun completeCallback() {
