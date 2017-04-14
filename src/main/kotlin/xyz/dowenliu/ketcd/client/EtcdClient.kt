@@ -117,7 +117,7 @@ class EtcdClient(val channelBuilder: ManagedChannelBuilder<*>,
          * @param channelBuilder ManagedChannelBuilder instance to use.
          * @return this builder to train.
          */
-        fun withCannelBuilder(channelBuilder: ManagedChannelBuilder<*>?): Builder {
+        fun withChannelBuilder(channelBuilder: ManagedChannelBuilder<*>?): Builder {
             this.channelBuilder = channelBuilder
             return this
         }
