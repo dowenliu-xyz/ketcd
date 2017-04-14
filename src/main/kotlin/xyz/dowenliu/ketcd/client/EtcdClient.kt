@@ -6,10 +6,15 @@ import xyz.dowenliu.ketcd.Endpoint
 import xyz.dowenliu.ketcd.UsernamePassword
 import xyz.dowenliu.ketcd.api.AuthGrpc
 import xyz.dowenliu.ketcd.api.AuthenticateRequest
+import xyz.dowenliu.ketcd.api.StatusResponse
 import xyz.dowenliu.ketcd.exception.AuthFailedException
 import xyz.dowenliu.ketcd.exception.ConnectException
 import xyz.dowenliu.ketcd.resolver.AbstractEtcdNameResolverFactory
+import xyz.dowenliu.ketcd.version.EtcdVersion
+import java.util.concurrent.CountDownLatch
 import java.util.concurrent.ExecutionException
+import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicReference
 
 /**
  * Etcd client.
@@ -50,6 +55,36 @@ class EtcdClient(val channelBuilder: ManagedChannelBuilder<*>,
                                 .setPasswordBytes(usernamePassword.password)
                                 .build()
                 )
+
+        @JvmStatic val knowVersion: AtomicReference<EtcdVersion?> = AtomicReference()
+    }
+
+    init {
+        val detectVersionLatch = CountDownLatch(1)
+        newMaintenanceService().statusMemberAsync(object : ResponseCallback<StatusResponse> {
+            override fun onResponse(response: StatusResponse) {
+                val detectedVersion = EtcdVersion.ofValue(response.version) ?: return
+                synchronized(Companion) {
+                    val stored = knowVersion.get()
+                    if (stored != null) {
+                        if (stored.releaseNumber > detectedVersion.releaseNumber) {
+                            knowVersion.set(detectedVersion)
+                        }
+                    } else {
+                        knowVersion.set(detectedVersion)
+                    }
+                }
+            }
+
+            override fun onError(throwable: Throwable) {
+                throw IllegalStateException("Can not detect etcd version")
+            }
+
+            override fun completeCallback() {
+                detectVersionLatch.countDown()
+            }
+        })
+        detectVersionLatch.await(10, TimeUnit.SECONDS)
     }
 
     fun newMaintenanceService(): EtcdMaintenanceService =
