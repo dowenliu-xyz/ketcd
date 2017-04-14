@@ -36,7 +36,7 @@ interface EtcdMaintenanceService {
      *
      * @return [ListenableFuture] of [AlarmResponse]
      */
-    fun listAlarmsFuture(): ListenableFuture<AlarmResponse>
+    fun listAlarmsInFuture(): ListenableFuture<AlarmResponse>
 
     /**
      * Get all active keyspace alarms (asynchronously).
@@ -59,7 +59,7 @@ interface EtcdMaintenanceService {
      * @param member The raised alarm to deactive.
      * @return [ListenableFuture] of [AlarmResponse]
      */
-    fun deactiveAlarmFuture(member: AlarmMember): ListenableFuture<AlarmResponse>
+    fun deactiveAlarmInFuture(member: AlarmMember): ListenableFuture<AlarmResponse>
 
     /**
      * Deactive a raised alarm (asynchronously).
@@ -98,7 +98,7 @@ interface EtcdMaintenanceService {
      *
      * @return [ListenableFuture] of [DefragmentResponse]
      */
-    fun defragmentMemberFuture(): ListenableFuture<DefragmentResponse>
+    fun defragmentMemberInFuture(): ListenableFuture<DefragmentResponse>
 
     /**
      * Defragment one member of the cluster (asynchronously).
@@ -128,7 +128,7 @@ interface EtcdMaintenanceService {
      *
      * @return [ListenableFuture] of [StatusResponse]
      */
-    fun statusMemberFuture(): ListenableFuture<StatusResponse>
+    fun statusMemberInFuture(): ListenableFuture<StatusResponse>
 
     /**
      * Get the status of one member (asynchronously).

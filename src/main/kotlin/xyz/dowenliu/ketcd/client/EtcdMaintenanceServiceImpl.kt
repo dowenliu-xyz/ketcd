@@ -31,7 +31,7 @@ class EtcdMaintenanceServiceImpl internal constructor(val channel: ManagedChanne
 
     override fun listAlarms(): AlarmResponse = blockingStub.alarm(listAlarmsRequest())
 
-    override fun listAlarmsFuture(): ListenableFuture<AlarmResponse> = futureStub.alarm(listAlarmsRequest())
+    override fun listAlarmsInFuture(): ListenableFuture<AlarmResponse> = futureStub.alarm(listAlarmsRequest())
 
     override fun listAlarmsAsync(callback: ResponseCallback<AlarmResponse>) =
             asyncStub.alarm(listAlarmsRequest(), object : StreamObserver<AlarmResponse> {
@@ -59,7 +59,7 @@ class EtcdMaintenanceServiceImpl internal constructor(val channel: ManagedChanne
 
     override fun deactiveAlarm(member: AlarmMember): AlarmResponse = blockingStub.alarm(deactiveAlarmRequest(member))
 
-    override fun deactiveAlarmFuture(member: AlarmMember): ListenableFuture<AlarmResponse> =
+    override fun deactiveAlarmInFuture(member: AlarmMember): ListenableFuture<AlarmResponse> =
             futureStub.alarm(deactiveAlarmRequest(member))
 
     override fun deactiveAlarmAsync(member: AlarmMember, callback: ResponseCallback<AlarmResponse>) =
@@ -78,7 +78,7 @@ class EtcdMaintenanceServiceImpl internal constructor(val channel: ManagedChanne
     override fun defragmentMember(): DefragmentResponse =
             blockingStub.defragment(DefragmentRequest.getDefaultInstance())
 
-    override fun defragmentMemberFuture(): ListenableFuture<DefragmentResponse> =
+    override fun defragmentMemberInFuture(): ListenableFuture<DefragmentResponse> =
             futureStub.defragment(DefragmentRequest.getDefaultInstance())
 
     override fun defragmentMemberAsync(callback: ResponseCallback<DefragmentResponse>) =
@@ -96,7 +96,7 @@ class EtcdMaintenanceServiceImpl internal constructor(val channel: ManagedChanne
 
     override fun statusMember(): StatusResponse = blockingStub.status(StatusRequest.getDefaultInstance())
 
-    override fun statusMemberFuture(): ListenableFuture<StatusResponse> =
+    override fun statusMemberInFuture(): ListenableFuture<StatusResponse> =
             futureStub.status(StatusRequest.getDefaultInstance())
 
     override fun statusMemberAsync(callback: ResponseCallback<StatusResponse>) {

@@ -48,7 +48,7 @@ class EtcdMaintenanceServiceImplTest {
 
     @Test
     fun testListAlarmsFuture() {
-        val response = service.listAlarmsFuture().get(5, TimeUnit.SECONDS)
+        val response = service.listAlarmsInFuture().get(5, TimeUnit.SECONDS)
         assertion.assertNotNull(response.header)
     }
 
@@ -90,7 +90,7 @@ class EtcdMaintenanceServiceImplTest {
 
     @Test(enabled = false)
     fun testDeactiveAlarmFuture() {
-        // TEST_THIS how to test deactiveAlarmFuture()?
+        // TEST_THIS how to test deactiveAlarmInFuture()?
     }
 
     @Test(enabled = false)
@@ -106,7 +106,7 @@ class EtcdMaintenanceServiceImplTest {
 
     @Test
     fun testDefragmentMemberFuture() {
-        val response = service.defragmentMemberFuture().get(5, TimeUnit.SECONDS)
+        val response = service.defragmentMemberInFuture().get(5, TimeUnit.SECONDS)
         assertion.assertNotNull(response.header)
     }
 
@@ -153,7 +153,7 @@ class EtcdMaintenanceServiceImplTest {
 
     @Test(groups = arrayOf("Maintenance.status"))
     fun testStatusMemberFuture() {
-        val response = service.statusMemberFuture().get(5, TimeUnit.SECONDS)
+        val response = service.statusMemberInFuture().get(5, TimeUnit.SECONDS)
         assertion.assertNotNull(response.header)
         val version = response.version
         logger.info(version)
