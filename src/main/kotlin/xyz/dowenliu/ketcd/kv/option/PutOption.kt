@@ -21,7 +21,7 @@ import xyz.dowenliu.ketcd.version.ForEtcdVersion
 class PutOption private constructor(val leaseId: Long,
                                     @ForEtcdVersion(EtcdVersion.V3_0_11) val prevKV: Boolean) {
     companion object {
-        val DEFAULT = newBuilder().build()
+        @JvmStatic val DEFAULT = newBuilder().build()
 
         private val logger: Logger = LoggerFactory.getLogger(PutOption::class.java)
 
@@ -30,7 +30,7 @@ class PutOption private constructor(val leaseId: Long,
          *
          * @return builder
          */
-        fun newBuilder(): Builder = Builder()
+        @JvmStatic fun newBuilder(): Builder = Builder()
     }
 
     class Builder internal  constructor() {
