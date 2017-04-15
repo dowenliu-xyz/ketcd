@@ -18,12 +18,12 @@ import xyz.dowenliu.ketcd.kv.option.PutOption
  */
 abstract class Op internal constructor(protected val type: Type, protected val key: ByteString) {
     companion object {
-        fun put(key: ByteString, value: ByteString, option: PutOption = PutOption.DEFAULT): PutOp =
+        @JvmStatic fun put(key: ByteString, value: ByteString, option: PutOption = PutOption.DEFAULT): PutOp =
                 PutOp(key, value, option)
 
-        fun get(key: ByteString, option: GetOption = GetOption.DEFAULT): GetOp = GetOp(key, option)
+        @JvmStatic fun get(key: ByteString, option: GetOption = GetOption.DEFAULT): GetOp = GetOp(key, option)
 
-        fun delete(key: ByteString, option: DeleteOption = DeleteOption.DEFAULT): DeleteOp = DeleteOp(key, option)
+        @JvmStatic fun delete(key: ByteString, option: DeleteOption = DeleteOption.DEFAULT): DeleteOp = DeleteOp(key, option)
     }
 
     abstract fun toRequestOp(): RequestOp
