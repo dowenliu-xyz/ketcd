@@ -41,14 +41,14 @@ class GetOption private constructor(val endKey: ByteString?,
                                     val keysOnly: Boolean,
                                     val countOnly: Boolean) {
     companion object {
-        val DEFAULT = newBuilder().build()
+        @JvmStatic val DEFAULT = newBuilder().build()
 
         /**
          * Create a builder to construct options for get operation.
          *
          * @return builder
          */
-        fun newBuilder(): Builder = Builder()
+        @JvmStatic fun newBuilder(): Builder = Builder()
     }
 
     class Builder internal constructor() {
