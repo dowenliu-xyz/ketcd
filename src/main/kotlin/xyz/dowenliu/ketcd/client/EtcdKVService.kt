@@ -25,7 +25,7 @@ interface EtcdKVService : AutoCloseable {
      * @param options put request options.
      * @return [PutResponse]
      */
-    fun put(key: String, value: String, options: PutOption? = null): PutResponse
+    fun put(key: String, value: String, options: PutOption = PutOption.DEFAULT): PutResponse
     /**
      * Puts the given key into the key-value store in future.
      * A put request increments the revision of the key-value store and generates one event in the event history.
@@ -35,7 +35,7 @@ interface EtcdKVService : AutoCloseable {
      * @param options put request options.
      * @return [ListenableFuture] of [PutResponse]
      */
-    fun putInFuture(key: String, value: String, options: PutOption? = null): ListenableFuture<PutResponse>
+    fun putInFuture(key: String, value: String, options: PutOption = PutOption.DEFAULT): ListenableFuture<PutResponse>
     /**
      * Puts the given key into the key-value store (asynchronously).
      * A put request increments the revision of the key-value store and generates one event in the event history.
@@ -45,7 +45,7 @@ interface EtcdKVService : AutoCloseable {
      * @param options put request options.
      * @param callback A [ResponseCallback] to handle the response.
      */
-    fun putAsync(key: String, value: String, options: PutOption? = null, callback: ResponseCallback<PutResponse>)
+    fun putAsync(key: String, value: String, options: PutOption = PutOption.DEFAULT, callback: ResponseCallback<PutResponse>)
 
     /**
      * Gets the key/value pair of key or the key/value pairs in the range from the key-value store (blocking).
@@ -56,7 +56,7 @@ interface EtcdKVService : AutoCloseable {
      * @param options get request options
      * @return [RangeResponse]
      */
-    fun get(key: String, options: GetOption? = null): RangeResponse
+    fun get(key: String, options: GetOption = GetOption.DEFAULT): RangeResponse
 
     /**
      * Gets the key/value pair of key or the key/value pairs in the range from the key-value store in future.
@@ -67,7 +67,7 @@ interface EtcdKVService : AutoCloseable {
      * @param options get request options
      * @return [ListenableFuture] of [RangeResponse]
      */
-    fun getInFuture(key: String, options: GetOption? = null): ListenableFuture<RangeResponse>
+    fun getInFuture(key: String, options: GetOption = GetOption.DEFAULT): ListenableFuture<RangeResponse>
 
     /**
      * Gets the key/value pair of key or the key/value pairs in the range from the key-value store (asynchronously).
@@ -78,7 +78,7 @@ interface EtcdKVService : AutoCloseable {
      * @param options get request options
      * @param callback A [ResponseCallback] to handle the response.
      */
-    fun getAsync(key: String, options: GetOption? = null, callback: ResponseCallback<RangeResponse>)
+    fun getAsync(key: String, options: GetOption = GetOption.DEFAULT, callback: ResponseCallback<RangeResponse>)
 
     /**
      * Deletes one or the given range from the key-value store (blocking).
@@ -90,7 +90,7 @@ interface EtcdKVService : AutoCloseable {
      * @param options delete request options
      * @return [DeleteRangeResponse]
      */
-    fun delete(key: String, options: DeleteOption? = null): DeleteRangeResponse
+    fun delete(key: String, options: DeleteOption = DeleteOption.DEFAULT): DeleteRangeResponse
 
     /**
      * Deletes one or the given range from the key-value store in future.
@@ -102,7 +102,7 @@ interface EtcdKVService : AutoCloseable {
      * @param options delete request options
      * @return [ListenableFuture] of [DeleteRangeResponse]
      */
-    fun deleteInFuture(key: String, options: DeleteOption? = null): ListenableFuture<DeleteRangeResponse>
+    fun deleteInFuture(key: String, options: DeleteOption = DeleteOption.DEFAULT): ListenableFuture<DeleteRangeResponse>
 
     /**
      * Deletes one or the given range from the key-value store (asynchronously).
@@ -114,7 +114,7 @@ interface EtcdKVService : AutoCloseable {
      * @param options delete request options
      * @param callback A [ResponseCallback] to handle the response.
      */
-    fun deleteAsync(key: String, options: DeleteOption? = null, callback: ResponseCallback<DeleteRangeResponse>)
+    fun deleteAsync(key: String, options: DeleteOption = DeleteOption.DEFAULT, callback: ResponseCallback<DeleteRangeResponse>)
 
     /**
      * Compacts the event history in the etcd key-value store (blocking).
@@ -126,7 +126,7 @@ interface EtcdKVService : AutoCloseable {
      * @param options compact request options.
      * @return [CompactionResponse]
      */
-    fun compact(options: CompactOption? = null): CompactionResponse
+    fun compact(options: CompactOption = CompactOption.DEFAULT): CompactionResponse
 
     /**
      * Compacts the event history in the etcd key-value store in future.
@@ -138,7 +138,7 @@ interface EtcdKVService : AutoCloseable {
      * @param options compact request options.
      * @return [ListenableFuture] of [CompactionResponse]
      */
-    fun compactInFuture(options: CompactOption? = null): ListenableFuture<CompactionResponse>
+    fun compactInFuture(options: CompactOption = CompactOption.DEFAULT): ListenableFuture<CompactionResponse>
 
     /**
      * Compacts the event history in the etcd key-value store (asynchronously).
@@ -150,7 +150,7 @@ interface EtcdKVService : AutoCloseable {
      * @param options compact request options.
      * @param callback A [ResponseCallback] to handle the response.
      */
-    fun compact(options: CompactOption? = null, callback: ResponseCallback<CompactionResponse>)
+    fun compact(options: CompactOption = CompactOption.DEFAULT, callback: ResponseCallback<CompactionResponse>)
 
     /**
      * Processes multiple requests in a single transaction (blocking).
