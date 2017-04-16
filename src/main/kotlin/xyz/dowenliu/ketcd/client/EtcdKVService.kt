@@ -183,5 +183,5 @@ interface EtcdKVService : AutoCloseable {
      * @param txn Predicate that create a [TxnRequest]
      * @param callback A [ResponseCallback] to handle the response.
      */
-    fun commit(txn: Txn, callback: ResponseCallback<TxnResponse>)
+    fun commitAsync(txn: Txn, callback: ResponseCallback<TxnResponse>)
 }
