@@ -14,7 +14,7 @@ import xyz.dowenliu.ketcd.api.MemberUpdateResponse
  * @author liufl
  * @since 0.1.0
  */
-interface EtcdClusterService {
+interface EtcdClusterService : AutoCloseable {
     /**
      * Lists the current cluster membership (blocking).
      *
