@@ -15,7 +15,7 @@ import xyz.dowenliu.ketcd.kv.option.PutOption
  * @author liufl
  * @since 0.1.0
  */
-interface EtcdKVService {
+interface EtcdKVService : AutoCloseable {
     /**
      * Puts the given key into the key-value store (blocking).
      * A put request increments the revision of the key-value store and generates one event in the event history.
