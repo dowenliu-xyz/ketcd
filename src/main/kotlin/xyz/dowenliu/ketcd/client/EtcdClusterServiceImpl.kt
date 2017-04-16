@@ -5,7 +5,6 @@ import io.grpc.ManagedChannel
 import io.grpc.stub.StreamObserver
 import xyz.dowenliu.ketcd.Endpoint
 import xyz.dowenliu.ketcd.api.*
-import java.io.Closeable
 import java.util.*
 import java.util.stream.Collectors
 
@@ -17,7 +16,7 @@ import java.util.stream.Collectors
  * @since 0.1.0
  */
 class EtcdClusterServiceImpl internal constructor(val channel: ManagedChannel, val token: String?) :
-        EtcdClusterService, Closeable {
+        EtcdClusterService {
     private val blockingStub = configureStub(ClusterGrpc.newBlockingStub(channel), token)
     private val futureStub = configureStub(ClusterGrpc.newFutureStub(channel), token)
     private val asyncStub = configureStub(ClusterGrpc.newStub(channel), token)
