@@ -4,7 +4,6 @@ import com.google.common.util.concurrent.ListenableFuture
 import io.grpc.ManagedChannel
 import io.grpc.stub.StreamObserver
 import xyz.dowenliu.ketcd.api.*
-import java.io.Closeable
 
 /**
  * Implementation of maintenance service.
@@ -14,7 +13,7 @@ import java.io.Closeable
  * @since 0.1.0
  */
 class EtcdMaintenanceServiceImpl internal constructor(val channel: ManagedChannel, val token: String?) :
-        EtcdMaintenanceService, Closeable {
+        EtcdMaintenanceService {
     private val blockingStub = configureStub(MaintenanceGrpc.newBlockingStub(channel), token)
     private val futureStub = configureStub(MaintenanceGrpc.newFutureStub(channel), token)
     private val asyncStub = configureStub(MaintenanceGrpc.newStub(channel), token)
