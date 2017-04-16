@@ -150,7 +150,7 @@ interface EtcdKVService : AutoCloseable {
      * @param options compact request options.
      * @param callback A [ResponseCallback] to handle the response.
      */
-    fun compact(options: CompactOption = CompactOption.DEFAULT, callback: ResponseCallback<CompactionResponse>)
+    fun compactAsync(options: CompactOption = CompactOption.DEFAULT, callback: ResponseCallback<CompactionResponse>)
 
     /**
      * Processes multiple requests in a single transaction (blocking).
