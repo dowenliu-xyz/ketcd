@@ -23,7 +23,7 @@ import xyz.dowenliu.ketcd.api.StatusResponse
  * @author liufl
  * @since 0.1.0
  */
-interface EtcdMaintenanceService {
+interface EtcdMaintenanceService : AutoCloseable {
     /**
      * Get all active keyspace alarms (blocking).
      *
