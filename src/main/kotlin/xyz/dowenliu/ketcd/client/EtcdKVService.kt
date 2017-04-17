@@ -1,6 +1,7 @@
 package xyz.dowenliu.ketcd.client
 
 import com.google.common.util.concurrent.ListenableFuture
+import com.google.protobuf.ByteString
 import xyz.dowenliu.ketcd.api.*
 import xyz.dowenliu.ketcd.kv.Txn
 import xyz.dowenliu.ketcd.kv.option.CompactOption
@@ -25,7 +26,7 @@ interface EtcdKVService : AutoCloseable {
      * @param options put request options.
      * @return [PutResponse]
      */
-    fun put(key: String, value: String, options: PutOption = PutOption.DEFAULT): PutResponse
+    fun put(key: ByteString, value: ByteString, options: PutOption = PutOption.DEFAULT): PutResponse
     /**
      * Puts the given key into the key-value store in future.
      * A put request increments the revision of the key-value store and generates one event in the event history.
@@ -35,7 +36,7 @@ interface EtcdKVService : AutoCloseable {
      * @param options put request options.
      * @return [ListenableFuture] of [PutResponse]
      */
-    fun putInFuture(key: String, value: String, options: PutOption = PutOption.DEFAULT): ListenableFuture<PutResponse>
+    fun putInFuture(key: ByteString, value: ByteString, options: PutOption = PutOption.DEFAULT): ListenableFuture<PutResponse>
     /**
      * Puts the given key into the key-value store (asynchronously).
      * A put request increments the revision of the key-value store and generates one event in the event history.
@@ -45,7 +46,7 @@ interface EtcdKVService : AutoCloseable {
      * @param options put request options.
      * @param callback A [ResponseCallback] to handle the response.
      */
-    fun putAsync(key: String, value: String, options: PutOption = PutOption.DEFAULT, callback: ResponseCallback<PutResponse>)
+    fun putAsync(key: ByteString, value: ByteString, options: PutOption = PutOption.DEFAULT, callback: ResponseCallback<PutResponse>)
 
     /**
      * Gets the key/value pair of key or the key/value pairs in the range from the key-value store (blocking).
@@ -56,7 +57,7 @@ interface EtcdKVService : AutoCloseable {
      * @param options get request options
      * @return [RangeResponse]
      */
-    fun get(key: String, options: GetOption = GetOption.DEFAULT): RangeResponse
+    fun get(key: ByteString, options: GetOption = GetOption.DEFAULT): RangeResponse
 
     /**
      * Gets the key/value pair of key or the key/value pairs in the range from the key-value store in future.
@@ -67,7 +68,7 @@ interface EtcdKVService : AutoCloseable {
      * @param options get request options
      * @return [ListenableFuture] of [RangeResponse]
      */
-    fun getInFuture(key: String, options: GetOption = GetOption.DEFAULT): ListenableFuture<RangeResponse>
+    fun getInFuture(key: ByteString, options: GetOption = GetOption.DEFAULT): ListenableFuture<RangeResponse>
 
     /**
      * Gets the key/value pair of key or the key/value pairs in the range from the key-value store (asynchronously).
@@ -78,7 +79,7 @@ interface EtcdKVService : AutoCloseable {
      * @param options get request options
      * @param callback A [ResponseCallback] to handle the response.
      */
-    fun getAsync(key: String, options: GetOption = GetOption.DEFAULT, callback: ResponseCallback<RangeResponse>)
+    fun getAsync(key: ByteString, options: GetOption = GetOption.DEFAULT, callback: ResponseCallback<RangeResponse>)
 
     /**
      * Deletes one or the given range from the key-value store (blocking).
@@ -90,7 +91,7 @@ interface EtcdKVService : AutoCloseable {
      * @param options delete request options
      * @return [DeleteRangeResponse]
      */
-    fun delete(key: String, options: DeleteOption = DeleteOption.DEFAULT): DeleteRangeResponse
+    fun delete(key: ByteString, options: DeleteOption = DeleteOption.DEFAULT): DeleteRangeResponse
 
     /**
      * Deletes one or the given range from the key-value store in future.
@@ -102,7 +103,7 @@ interface EtcdKVService : AutoCloseable {
      * @param options delete request options
      * @return [ListenableFuture] of [DeleteRangeResponse]
      */
-    fun deleteInFuture(key: String, options: DeleteOption = DeleteOption.DEFAULT): ListenableFuture<DeleteRangeResponse>
+    fun deleteInFuture(key: ByteString, options: DeleteOption = DeleteOption.DEFAULT): ListenableFuture<DeleteRangeResponse>
 
     /**
      * Deletes one or the given range from the key-value store (asynchronously).
@@ -114,7 +115,7 @@ interface EtcdKVService : AutoCloseable {
      * @param options delete request options
      * @param callback A [ResponseCallback] to handle the response.
      */
-    fun deleteAsync(key: String, options: DeleteOption = DeleteOption.DEFAULT, callback: ResponseCallback<DeleteRangeResponse>)
+    fun deleteAsync(key: ByteString, options: DeleteOption = DeleteOption.DEFAULT, callback: ResponseCallback<DeleteRangeResponse>)
 
     /**
      * Compacts the event history in the etcd key-value store (blocking).
