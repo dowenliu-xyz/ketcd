@@ -94,6 +94,8 @@ class EtcdClient(val channelBuilder: ManagedChannelBuilder<*>,
     fun newClusterService(): EtcdClusterService =
             EtcdClusterServiceImpl(channelBuilder.build(), token)
 
+    fun newKVService(): EtcdKVService = EtcdKVServiceImpl(channelBuilder.build(), token)
+
     class Builder internal constructor() {
         private val _endpoints: MutableList<Endpoint> = mutableListOf()
         /**
