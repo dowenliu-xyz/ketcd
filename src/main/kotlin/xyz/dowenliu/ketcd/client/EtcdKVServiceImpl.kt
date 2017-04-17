@@ -42,17 +42,7 @@ class EtcdKVServiceImpl internal constructor(val channel: ManagedChannel, val to
             futureStub.put(putRequest(key, value, options))
 
     override fun putAsync(key: ByteString, value: ByteString, options: PutOption, callback: ResponseCallback<PutResponse>) =
-            asyncStub.put(putRequest(key, value, options), object : StreamObserver<PutResponse> {
-                override fun onNext(value: PutResponse?) {
-                    value?.let { callback.onResponse(it) }
-                }
-
-                override fun onError(t: Throwable?) {
-                    t?.let { callback.onError(it) }
-                }
-
-                override fun onCompleted() = callback.completeCallback()
-            })
+            asyncStub.put(putRequest(key, value, options), CallbackStreamObserver(callback))
 
     private fun getRequest(key: ByteString, options: GetOption): RangeRequest {
         val builder = RangeRequest.newBuilder()
@@ -74,17 +64,7 @@ class EtcdKVServiceImpl internal constructor(val channel: ManagedChannel, val to
             futureStub.range(getRequest(key, options))
 
     override fun getAsync(key: ByteString, options: GetOption, callback: ResponseCallback<RangeResponse>) =
-            asyncStub.range(getRequest(key, options), object : StreamObserver<RangeResponse> {
-                override fun onNext(value: RangeResponse?) {
-                    value?.let { callback.onResponse(it) }
-                }
-
-                override fun onError(t: Throwable?) {
-                    t?.let { callback.onError(it) }
-                }
-
-                override fun onCompleted() = callback.completeCallback()
-            })
+            asyncStub.range(getRequest(key, options), CallbackStreamObserver(callback))
 
     private fun deleteRequest(key: ByteString, options: DeleteOption): DeleteRangeRequest {
         val builder = DeleteRangeRequest.newBuilder()
@@ -101,17 +81,7 @@ class EtcdKVServiceImpl internal constructor(val channel: ManagedChannel, val to
             futureStub.deleteRange(deleteRequest(key, options))
 
     override fun deleteAsync(key: ByteString, options: DeleteOption, callback: ResponseCallback<DeleteRangeResponse>) =
-            asyncStub.deleteRange(deleteRequest(key, options), object : StreamObserver<DeleteRangeResponse> {
-                override fun onNext(value: DeleteRangeResponse?) {
-                    value?.let { callback.onResponse(it) }
-                }
-
-                override fun onError(t: Throwable?) {
-                    t?.let { callback.onError(it) }
-                }
-
-                override fun onCompleted() = callback.completeCallback()
-            })
+            asyncStub.deleteRange(deleteRequest(key, options), CallbackStreamObserver(callback))
 
     private fun compactRequest(options: CompactOption): CompactionRequest =
             CompactionRequest.newBuilder()
@@ -125,32 +95,12 @@ class EtcdKVServiceImpl internal constructor(val channel: ManagedChannel, val to
             futureStub.compact(compactRequest(options))
 
     override fun compactAsync(options: CompactOption, callback: ResponseCallback<CompactionResponse>) =
-            asyncStub.compact(compactRequest(options), object : StreamObserver<CompactionResponse> {
-                override fun onNext(value: CompactionResponse?) {
-                    value?.let { callback.onResponse(it) }
-                }
-
-                override fun onError(t: Throwable?) {
-                    t?.let { callback.onError(it) }
-                }
-
-                override fun onCompleted() = callback.completeCallback()
-            })
+            asyncStub.compact(compactRequest(options), CallbackStreamObserver(callback))
 
     override fun commit(txn: Txn): TxnResponse = blockingStub.txn(txn.toTxnRequest())
 
     override fun commitInFuture(txn: Txn): ListenableFuture<TxnResponse> = futureStub.txn(txn.toTxnRequest())
 
     override fun commitAsync(txn: Txn, callback: ResponseCallback<TxnResponse>) =
-            asyncStub.txn(txn.toTxnRequest(), object : StreamObserver<TxnResponse> {
-                override fun onNext(value: TxnResponse?) {
-                    value?.let { callback.onResponse(it) }
-                }
-
-                override fun onError(t: Throwable?) {
-                    t?.let { callback.onError(it) }
-                }
-
-                override fun onCompleted() = callback.completeCallback()
-            })
+            asyncStub.txn(txn.toTxnRequest(), CallbackStreamObserver(callback))
 }

@@ -33,17 +33,7 @@ class EtcdMaintenanceServiceImpl internal constructor(val channel: ManagedChanne
     override fun listAlarmsInFuture(): ListenableFuture<AlarmResponse> = futureStub.alarm(listAlarmsRequest())
 
     override fun listAlarmsAsync(callback: ResponseCallback<AlarmResponse>) =
-            asyncStub.alarm(listAlarmsRequest(), object : StreamObserver<AlarmResponse> {
-                override fun onNext(value: AlarmResponse?) {
-                    value?.let { callback.onResponse(it) }
-                }
-
-                override fun onError(t: Throwable?) {
-                    t?.let { callback.onError(it) }
-                }
-
-                override fun onCompleted() = callback.completeCallback()
-            })
+            asyncStub.alarm(listAlarmsRequest(), CallbackStreamObserver(callback))
 
     private fun deactiveAlarmRequest(member: AlarmMember): AlarmRequest {
         val memberID = member.memberID
@@ -62,17 +52,7 @@ class EtcdMaintenanceServiceImpl internal constructor(val channel: ManagedChanne
             futureStub.alarm(deactiveAlarmRequest(member))
 
     override fun deactiveAlarmAsync(member: AlarmMember, callback: ResponseCallback<AlarmResponse>) =
-            asyncStub.alarm(deactiveAlarmRequest(member), object : StreamObserver<AlarmResponse> {
-                override fun onNext(value: AlarmResponse?) {
-                    value?.let { callback.onResponse(it) }
-                }
-
-                override fun onError(t: Throwable?) {
-                    t?.let { callback.onError(it) }
-                }
-
-                override fun onCompleted() = callback.completeCallback()
-            })
+            asyncStub.alarm(deactiveAlarmRequest(member), CallbackStreamObserver(callback))
 
     override fun defragmentMember(): DefragmentResponse =
             blockingStub.defragment(DefragmentRequest.getDefaultInstance())
@@ -81,17 +61,7 @@ class EtcdMaintenanceServiceImpl internal constructor(val channel: ManagedChanne
             futureStub.defragment(DefragmentRequest.getDefaultInstance())
 
     override fun defragmentMemberAsync(callback: ResponseCallback<DefragmentResponse>) =
-            asyncStub.defragment(DefragmentRequest.getDefaultInstance(), object : StreamObserver<DefragmentResponse> {
-                override fun onNext(value: DefragmentResponse?) {
-                    value?.let { callback.onResponse(it) }
-                }
-
-                override fun onError(t: Throwable?) {
-                    t?.let { callback.onError(it) }
-                }
-
-                override fun onCompleted() = callback.completeCallback()
-            })
+            asyncStub.defragment(DefragmentRequest.getDefaultInstance(), CallbackStreamObserver(callback))
 
     override fun statusMember(): StatusResponse = blockingStub.status(StatusRequest.getDefaultInstance())
 
@@ -99,16 +69,6 @@ class EtcdMaintenanceServiceImpl internal constructor(val channel: ManagedChanne
             futureStub.status(StatusRequest.getDefaultInstance())
 
     override fun statusMemberAsync(callback: ResponseCallback<StatusResponse>) {
-        asyncStub.status(StatusRequest.getDefaultInstance(), object : StreamObserver<StatusResponse> {
-            override fun onNext(value: StatusResponse?) {
-                value?.let { callback.onResponse(it) }
-            }
-
-            override fun onError(t: Throwable?) {
-                t?.let { callback.onError(it) }
-            }
-
-            override fun onCompleted() = callback.completeCallback()
-        })
+        asyncStub.status(StatusRequest.getDefaultInstance(), CallbackStreamObserver(callback))
     }
 }
