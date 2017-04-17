@@ -11,3 +11,9 @@ import com.google.protobuf.ByteString
  */
 
 fun String.toByteString(): ByteString = ByteString.copyFromUtf8(this)
+
+fun ByteString.oneBitLarger(): ByteString {
+    val byteArray = this.toByteArray()
+    byteArray[byteArray.size - 1] = byteArray.last().inc()
+    return ByteString.copyFrom(byteArray)
+}
