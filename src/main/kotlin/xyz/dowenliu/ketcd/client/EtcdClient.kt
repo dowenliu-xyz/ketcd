@@ -96,6 +96,8 @@ class EtcdClient(val channelBuilder: ManagedChannelBuilder<*>,
 
     fun newKVService(): EtcdKVService = EtcdKVServiceImpl(channelBuilder.build(), token)
 
+    fun newAuthService(): EtcdAuthService = EtcdAuthServiceImpl(channelBuilder.build(), token)
+
     class Builder internal constructor() {
         private val _endpoints: MutableList<Endpoint> = mutableListOf()
         /**
