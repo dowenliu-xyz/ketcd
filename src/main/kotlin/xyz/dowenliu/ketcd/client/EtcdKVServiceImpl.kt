@@ -3,7 +3,6 @@ package xyz.dowenliu.ketcd.client
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.protobuf.ByteString
 import io.grpc.ManagedChannel
-import io.grpc.stub.StreamObserver
 import xyz.dowenliu.ketcd.api.*
 import xyz.dowenliu.ketcd.kv.Txn
 import xyz.dowenliu.ketcd.kv.option.CompactOption
