@@ -14,10 +14,11 @@ import xyz.dowenliu.ketcd.protobuf.toByteString
  * @author liufl
  * @since 0.1.0
  */
-class EtcdAuthServiceImpl internal constructor(val channel: ManagedChannel, val token: String?) : EtcdAuthService {
-    private val blockingStub = configureStub(AuthGrpc.newBlockingStub(channel), token)
-    private val futureStub = configureStub(AuthGrpc.newFutureStub(channel), token)
-    private val asyncStub = configureStub(AuthGrpc.newStub(channel), token)
+class EtcdAuthServiceImpl internal constructor(override val client: EtcdClient) : EtcdAuthService {
+    private val channel: ManagedChannel = client.channelBuilder.build()
+    private val blockingStub = configureStub(AuthGrpc.newBlockingStub(channel), client.token)
+    private val futureStub = configureStub(AuthGrpc.newFutureStub(channel), client.token)
+    private val asyncStub = configureStub(AuthGrpc.newStub(channel), client.token)
 
     override fun authEnable(): AuthEnableResponse = blockingStub.authEnable(AuthEnableRequest.getDefaultInstance())
 

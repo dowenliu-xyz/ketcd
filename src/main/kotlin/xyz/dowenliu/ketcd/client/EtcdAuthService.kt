@@ -14,6 +14,11 @@ import xyz.dowenliu.ketcd.api.*
  */
 interface EtcdAuthService {
     /**
+     * The client which created this service.
+     */
+    val client: EtcdClient
+
+    /**
      * Enable authentication (blocking).
      *
      * @return [AuthEnableResponse]
