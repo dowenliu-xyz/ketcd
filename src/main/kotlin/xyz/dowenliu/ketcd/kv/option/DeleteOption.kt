@@ -1,9 +1,6 @@
 package xyz.dowenliu.ketcd.kv.option
 
 import com.google.protobuf.ByteString
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
-import xyz.dowenliu.ketcd.client.EtcdClient
 import xyz.dowenliu.ketcd.version.EtcdVersion
 import xyz.dowenliu.ketcd.version.ForEtcdVersion
 
@@ -29,7 +26,6 @@ class DeleteOption private constructor(val endKey: ByteString?,
                                        @ForEtcdVersion(EtcdVersion.V3_0_11) val prevKV: Boolean) {
     companion object {
         @JvmStatic val DEFAULT = newBuilder().build()
-        private val logger: Logger = LoggerFactory.getLogger(DeleteOption::class.java)
 
         /**
          * Create a builder to construct options for get operation.
@@ -70,11 +66,6 @@ class DeleteOption private constructor(val endKey: ByteString?,
          */
         @ForEtcdVersion(EtcdVersion.V3_0_11)
         fun withPrevKV(prevKV: Boolean): Builder {
-            EtcdClient.knowVersion.get()?.let {
-                if (it.releaseNumber < EtcdVersion.V3_0_11.releaseNumber)
-                    logger.warn("Put option prevKV is support since v3.0.11," +
-                            " but current server version can be ${it.value}")
-            }
             this.prevKV = prevKV
             return this
         }

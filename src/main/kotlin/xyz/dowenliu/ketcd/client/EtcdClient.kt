@@ -56,9 +56,9 @@ class EtcdClient(val channelBuilder: ManagedChannelBuilder<*>,
                                 .setPasswordBytes(usernamePassword.password)
                                 .build()
                 )
-
-        internal val knowVersion: AtomicReference<EtcdVersion?> = AtomicReference()
     }
+
+    internal val knowVersion: AtomicReference<EtcdVersion?> = AtomicReference()
 
     init {
         val detectVersionLatch = CountDownLatch(1)

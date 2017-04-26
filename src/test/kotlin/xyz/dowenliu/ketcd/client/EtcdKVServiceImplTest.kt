@@ -53,7 +53,7 @@ class EtcdKVServiceImplTest {
         var options = PutOption.newBuilder().prevKV(true).build()
         response = kvService.put(key, value2, options)
         assertion.assertTrue(response.hasHeader())
-        if (EtcdClient.knowVersion.get()?.releaseNumber ?: 0 >= EtcdVersion.V3_0_11.releaseNumber) {
+        if (etcdClient.knowVersion.get()?.releaseNumber ?: 0 >= EtcdVersion.V3_0_11.releaseNumber) {
             assertion.assertTrue(response.hasPrevKv())
             val prevKv = response.prevKv
             assertion.assertEquals(key, prevKv.key)
@@ -67,7 +67,6 @@ class EtcdKVServiceImplTest {
         } catch (expected: Exception) {
             // do nothing
         }
-        // TEST_THIS put with existing lease will be test in etcd lease service test
     }
 
     @Test(dependsOnMethods = arrayOf("testPut"))
@@ -241,7 +240,7 @@ class EtcdKVServiceImplTest {
         val keyZ1 = baseKeyZ.concat("1".toByteString())
         deleteResp = kvService.delete(keyZ1, deleteOptions)
         assertion.assertEquals(deleteResp.deleted, 1L)
-        if (EtcdClient.knowVersion.get()?.releaseNumber ?: 0 >= EtcdVersion.V3_0_11.releaseNumber) {
+        if (etcdClient.knowVersion.get()?.releaseNumber ?: 0 >= EtcdVersion.V3_0_11.releaseNumber) {
             assertion.assertEquals(deleteResp.prevKvsCount, 1)
             assertion.assertEquals(deleteResp.getPrevKvs(0).key, keyZ1)
             assertion.assertEquals(deleteResp.getPrevKvs(0).value, value1)

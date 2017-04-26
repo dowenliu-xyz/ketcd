@@ -23,7 +23,7 @@ class EtcdClientTest {
 
         assertion.assertNotSame(build1, build2)
 
-        val knowVersion = EtcdClient.knowVersion.get()
+        val knowVersion = etcdClient.knowVersion.get()
         assertion.assertNotNull(knowVersion)
     }
 
