@@ -5,10 +5,10 @@ if [[ -z "${ETCD_VERSION}" ]]; then
 fi
 OS=`uname`
 
-if [[ $OS =~ ^Darwin ]]; then
+if [[ ${OS} =~ ^Darwin ]]; then
   BINOS="darwin"
   SUFFIX=".zip"
-elif  [[ $OS =~ ^Linux ]]; then
+elif  [[ ${OS} =~ ^Linux ]]; then
   BINOS="linux"
   SUFFIX=".tar.gz"
 else
