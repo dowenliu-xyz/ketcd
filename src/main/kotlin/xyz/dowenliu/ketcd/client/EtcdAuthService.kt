@@ -322,7 +322,7 @@ interface EtcdAuthService {
             ListenableFuture<AuthRoleRevokePermissionResponse>
 
     /**
-     * Revokes a key or range permission of a specified role (asychronously).
+     * Revokes a key or range permission of a specified role (asynchronously).
      *
      * @param role The name of the role to revoke.
      * @param key The key to revoke.
@@ -406,7 +406,7 @@ interface EtcdAuthService {
     fun userRevokeRoleInFuture(username: String, role: String): ListenableFuture<AuthUserRevokeRoleResponse>
 
     /**
-     * Revokes a role of specified user (asychronously).
+     * Revokes a role of specified user (asynchronously).
      *
      * @param username The name of the user to revoke.
      * @param role The name of the role to revoke.
