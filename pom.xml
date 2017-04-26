@@ -39,6 +39,9 @@
         <assertj.version>3.6.2</assertj.version>
         <mockito.version>2.7.22</mockito.version>
         <logback.version>1.2.3</logback.version>
+
+        <!-- enable kotlin incremental compilation -->
+        <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
     </properties>
 
     <dependencies>
