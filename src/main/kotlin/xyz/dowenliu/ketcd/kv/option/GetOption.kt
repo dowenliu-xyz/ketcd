@@ -28,7 +28,7 @@ import xyz.dowenliu.ketcd.api.RangeRequest
  * @property sortTarget Field to sort the key value pairs by the provided [sortOrder].
  * @property serializable Is the get request a serializable get request.
  * Get requests are linearizable by default. For better performance, a serializable get
- * request is served locally without nedding to reach consensus with other nodes in the cluster.
+ * request is served locally without needing to reach consensus with other nodes in the cluster.
  * @property keysOnly Flag to only return keys.
  * @property countOnly Flag to only return count of the keys.
  */
@@ -112,7 +112,7 @@ class GetOption private constructor(val endKey: ByteString?,
          * Set the get request to be a serializable get request.
          *
          * Get requests are linearizable by default. For better performance, a serializable get
-         * request is served locally without nedding to reach consensus with other nodes in the cluster.
+         * request is served locally without needing to reach consensus with other nodes in the cluster.
          *
          * @param serializable is the get request a serializable get request.
          * @return this builder to train.
