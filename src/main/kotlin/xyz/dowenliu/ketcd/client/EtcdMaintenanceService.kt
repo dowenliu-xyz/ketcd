@@ -12,10 +12,10 @@ import xyz.dowenliu.ketcd.api.StatusResponse
  * An etcd cluster needs periodic maintenance to remain reliable. Depending on an etcd application's needs, this
  * maintenance can usually be automated and performed without downtime or significantly degraded performance.
  *
- * All etcd maintenance manages storage resources consumed by the etcd keyspace. Failure to adequately control the
- * keyspace size is guarded by storage space quotas; if an etcd member runs low on space, a quota will trigger
+ * All etcd maintenance manages storage resources consumed by the etcd key space. Failure to adequately control the
+ * key space size is guarded by storage space quotas; if an etcd member runs low on space, a quota will trigger
  * cluster-wide alarms which will put the system into a limited-operation maintenance mode. To avoid running out of
- * space for writes to the keyspace, the etcd keyspace history must be compacted. Storage space itself may be
+ * space for writes to the key space, the etcd key space history must be compacted. Storage space itself may be
  * reclaimed by defragmenting etcd members. Finally, periodic snapshot backups of etcd member state makes it possible
  * to recover any unintended logical data loss or corruption caused by operational error.
  *
@@ -25,21 +25,21 @@ import xyz.dowenliu.ketcd.api.StatusResponse
  */
 interface EtcdMaintenanceService : AutoCloseable {
     /**
-     * Get all active keyspace alarms (blocking).
+     * Get all active key space alarms (blocking).
      *
      * @return [AlarmResponse]
      */
     fun listAlarms(): AlarmResponse
 
     /**
-     * Get all active keyspace alarms as future.
+     * Get all active key space alarms as future.
      *
      * @return [ListenableFuture] of [AlarmResponse]
      */
     fun listAlarmsInFuture(): ListenableFuture<AlarmResponse>
 
     /**
-     * Get all active keyspace alarms (asynchronously).
+     * Get all active key space alarms (asynchronously).
      *
      * @param callback A [ResponseCallback] instance to handle the response.
      */
@@ -71,7 +71,7 @@ interface EtcdMaintenanceService : AutoCloseable {
     /**
      * Defragment one member of the cluster (blocking).
      *
-     * After compacting the keyspace, the backend database may exhibit internal fragmentation. Any internal
+     * After compacting the key space, the backend database may exhibit internal fragmentation. Any internal
      * fragmentation is space that is free to use by the backend but still consumes storage space. The process
      * of defragmentation releases this storage space back to the file system. Defragmentation is issued on a
      * per-member so that cluster-wide latency spikes may be avoided.
@@ -87,7 +87,7 @@ interface EtcdMaintenanceService : AutoCloseable {
     /**
      * Defragment one member of the cluster as future.
      *
-     * After compacting the keyspace, the backend database may exhibit internal fragmentation. Any internal
+     * After compacting the key space, the backend database may exhibit internal fragmentation. Any internal
      * fragmentation is space that is free to use by the backend but still consumes storage space. The process
      * of defragmentation releases this storage space back to the file system. Defragmentation is issued on a
      * per-member so that cluster-wide latency spikes may be avoided.
@@ -103,7 +103,7 @@ interface EtcdMaintenanceService : AutoCloseable {
     /**
      * Defragment one member of the cluster (asynchronously).
      *
-     * After compacting the keyspace, the backend database may exhibit internal fragmentation. Any internal
+     * After compacting the key space, the backend database may exhibit internal fragmentation. Any internal
      * fragmentation is space that is free to use by the backend but still consumes storage space. The process
      * of defragmentation releases this storage space back to the file system. Defragmentation is issued on a
      * per-member so that cluster-wide latency spikes may be avoided.
