@@ -17,10 +17,11 @@ import xyz.dowenliu.ketcd.kv.option.PutOption
  * @author liufl
  * @since 0.1.0
  */
-class EtcdKVServiceImpl internal constructor(val channel: ManagedChannel, val token: String?) : EtcdKVService {
-    private val blockingStub = configureStub(KVGrpc.newBlockingStub(channel), token)
-    private val futureStub = configureStub(KVGrpc.newFutureStub(channel), token)
-    private val asyncStub = configureStub(KVGrpc.newStub(channel), token)
+class EtcdKVServiceImpl internal constructor(override val client: EtcdClient) : EtcdKVService {
+    private val channel: ManagedChannel = client.channelBuilder.build()
+    private val blockingStub = configureStub(KVGrpc.newBlockingStub(channel), client.token)
+    private val futureStub = configureStub(KVGrpc.newFutureStub(channel), client.token)
+    private val asyncStub = configureStub(KVGrpc.newStub(channel), client.token)
 
     override fun close() {
         channel.shutdownNow()
