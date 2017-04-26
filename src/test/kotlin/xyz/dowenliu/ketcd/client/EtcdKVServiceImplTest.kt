@@ -22,6 +22,7 @@ import java.util.concurrent.atomic.AtomicReference
  * @author liufl
  * @since 0.1.0
  */
+@Test(groups = arrayOf("kv"))
 class EtcdKVServiceImplTest {
     private val logger: Logger = LoggerFactory.getLogger(javaClass)
 
