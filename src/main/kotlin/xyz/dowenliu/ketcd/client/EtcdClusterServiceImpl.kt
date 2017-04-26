@@ -14,11 +14,11 @@ import java.util.stream.Collectors
  * @author liufl
  * @since 0.1.0
  */
-class EtcdClusterServiceImpl internal constructor(val channel: ManagedChannel, val token: String?) :
-        EtcdClusterService {
-    private val blockingStub = configureStub(ClusterGrpc.newBlockingStub(channel), token)
-    private val futureStub = configureStub(ClusterGrpc.newFutureStub(channel), token)
-    private val asyncStub = configureStub(ClusterGrpc.newStub(channel), token)
+class EtcdClusterServiceImpl internal constructor(override val client: EtcdClient) : EtcdClusterService {
+    private val channel: ManagedChannel = client.channelBuilder.build()
+    private val blockingStub = configureStub(ClusterGrpc.newBlockingStub(channel), client.token)
+    private val futureStub = configureStub(ClusterGrpc.newFutureStub(channel), client.token)
+    private val asyncStub = configureStub(ClusterGrpc.newStub(channel), client.token)
 
     override fun close() {
         channel.shutdownNow()

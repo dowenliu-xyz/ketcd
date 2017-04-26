@@ -91,8 +91,7 @@ class EtcdClient(val channelBuilder: ManagedChannelBuilder<*>,
     fun newMaintenanceService(): EtcdMaintenanceService =
             EtcdMaintenanceServiceImpl(channelBuilder.build(), token)
 
-    fun newClusterService(): EtcdClusterService =
-            EtcdClusterServiceImpl(channelBuilder.build(), token)
+    fun newClusterService(): EtcdClusterService = EtcdClusterServiceImpl(this)
 
     fun newKVService(): EtcdKVService = EtcdKVServiceImpl(channelBuilder.build(), token)
 

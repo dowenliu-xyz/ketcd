@@ -16,6 +16,11 @@ import xyz.dowenliu.ketcd.api.MemberUpdateResponse
  */
 interface EtcdClusterService : AutoCloseable {
     /**
+     * The client which created this service.
+     */
+    val client: EtcdClient
+
+    /**
      * Lists the current cluster membership (blocking).
      *
      * @return [MemberListResponse]
