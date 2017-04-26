@@ -88,8 +88,7 @@ class EtcdClient(val channelBuilder: ManagedChannelBuilder<*>,
         detectVersionLatch.await(10, TimeUnit.SECONDS)
     }
 
-    fun newMaintenanceService(): EtcdMaintenanceService =
-            EtcdMaintenanceServiceImpl(channelBuilder.build(), token)
+    fun newMaintenanceService(): EtcdMaintenanceService = EtcdMaintenanceServiceImpl(this)
 
     fun newClusterService(): EtcdClusterService = EtcdClusterServiceImpl(this)
 

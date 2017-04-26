@@ -25,6 +25,11 @@ import xyz.dowenliu.ketcd.api.StatusResponse
  */
 interface EtcdMaintenanceService : AutoCloseable {
     /**
+     * The client which created this service.
+     */
+    val client: EtcdClient
+
+    /**
      * Get all active key space alarms (blocking).
      *
      * @return [AlarmResponse]

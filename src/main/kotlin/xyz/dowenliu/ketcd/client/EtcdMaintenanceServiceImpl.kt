@@ -11,11 +11,11 @@ import xyz.dowenliu.ketcd.api.*
  * @author liufl
  * @since 0.1.0
  */
-class EtcdMaintenanceServiceImpl internal constructor(val channel: ManagedChannel, val token: String?) :
-        EtcdMaintenanceService {
-    private val blockingStub = configureStub(MaintenanceGrpc.newBlockingStub(channel), token)
-    private val futureStub = configureStub(MaintenanceGrpc.newFutureStub(channel), token)
-    private val asyncStub = configureStub(MaintenanceGrpc.newStub(channel), token)
+class EtcdMaintenanceServiceImpl internal constructor(override val client: EtcdClient) : EtcdMaintenanceService {
+    private val channel: ManagedChannel = client.channelBuilder.build()
+    private val blockingStub = configureStub(MaintenanceGrpc.newBlockingStub(channel), client.token)
+    private val futureStub = configureStub(MaintenanceGrpc.newFutureStub(channel), client.token)
+    private val asyncStub = configureStub(MaintenanceGrpc.newStub(channel), client.token)
 
     override fun close() {
         channel.shutdownNow()
