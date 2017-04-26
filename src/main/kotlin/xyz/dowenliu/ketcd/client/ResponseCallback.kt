@@ -7,7 +7,7 @@ package xyz.dowenliu.ketcd.client
  * @author liufl
  * @since 0.1.0
  */
-interface ResponseCallback<T> {
+interface ResponseCallback<in T> {
     /**
      * Handle response received.
      *
