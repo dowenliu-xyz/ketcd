@@ -96,6 +96,8 @@ class EtcdClient(val channelBuilder: ManagedChannelBuilder<*>,
 
     fun newAuthService(): EtcdAuthService = EtcdAuthServiceImpl(this)
 
+    fun newLeaseService(): EtcdLeaseService = EtcdLeaseServiceImpl(this)
+
     class Builder internal constructor() {
         private val _endpoints: MutableList<Endpoint> = mutableListOf()
         /**
