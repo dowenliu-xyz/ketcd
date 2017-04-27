@@ -70,7 +70,7 @@ abstract class Op internal constructor(protected val type: Type, protected val k
             val builder = DeleteRangeRequest.newBuilder()
                     .setKey(key)
                     .setPrevKv(option.prevKV)
-            option.endKey?.let { builder.rangeEnd = it }
+                    .setRangeEnd(option.endKey)
             return RequestOp.newBuilder().setRequestDeleteRange(builder).build()
         }
     }

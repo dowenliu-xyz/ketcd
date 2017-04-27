@@ -65,13 +65,12 @@ class EtcdKVServiceImpl internal constructor(override val client: EtcdClient) : 
     override fun getAsync(key: ByteString, options: GetOption, callback: ResponseCallback<RangeResponse>) =
             asyncStub.range(getRequest(key, options), CallbackStreamObserver(callback))
 
-    private fun deleteRequest(key: ByteString, options: DeleteOption): DeleteRangeRequest {
-        val builder = DeleteRangeRequest.newBuilder()
-                .setKey(key)
-                .setPrevKv(options.prevKV)
-        options.endKey?.let { builder.rangeEnd = it }
-        return builder.build()
-    }
+    private fun deleteRequest(key: ByteString, options: DeleteOption): DeleteRangeRequest =
+            DeleteRangeRequest.newBuilder()
+                    .setKey(key)
+                    .setPrevKv(options.prevKV)
+                    .setRangeEnd(options.endKey)
+                    .build()
 
     override fun delete(key: ByteString, options: DeleteOption): DeleteRangeResponse =
             blockingStub.deleteRange(deleteRequest(key, options))
