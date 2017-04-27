@@ -39,13 +39,14 @@ enum class EtcdVersion(val value: String, val releaseNumber: Int) {
     V3_1_3("3.1.3", 25),
     V3_1_4("3.1.4", 26),
     V3_1_5("3.1.5", 27),
+    V3_1_6("3.1.6", 28),
     ;
 
     companion object {
         /**
          * Current latest etcd version.
          */
-        @JvmStatic val CURRENT = V3_1_5
+        @JvmStatic val CURRENT = V3_1_6
 
         private val valueMap = EtcdVersion.values().map { Pair(it.value, it) }.toMap()
 
