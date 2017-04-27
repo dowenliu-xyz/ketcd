@@ -21,7 +21,7 @@ import java.util.concurrent.atomic.AtomicReference
  * @author liufl
  * @since 0.1.0
  */
-@Test(dependsOnGroups = arrayOf("auth"))
+@Test(dependsOnGroups = arrayOf("auth"), groups = arrayOf("lease"))
 class EtcdLeaseServiceImplTest {
     private val logger: Logger = LoggerFactory.getLogger(javaClass)
 
