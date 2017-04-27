@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit
  * @author liufl
  * @since 0.1.0
  */
-@Test(dependsOnGroups = arrayOf("kv"))
+@Test(dependsOnGroups = arrayOf("kv"), groups = arrayOf("auth"))
 class EtcdAuthServiceImplTest {
     private val assertion = Assertion()
     private val etcdClient = EtcdClient.newBuilder().withEndpoint(Endpoint.of("localhost:2379")).build()
