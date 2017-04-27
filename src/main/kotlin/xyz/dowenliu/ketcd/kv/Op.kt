@@ -60,7 +60,7 @@ abstract class Op internal constructor(protected val type: Type, protected val k
                     .setSerializable(option.serializable)
                     .setSortOrder(option.sortOrder)
                     .setSortTarget(option.sortTarget)
-            option.endKey?.let { builder.rangeEnd = it }
+                    .setRangeEnd(option.endKey)
             return RequestOp.newBuilder().setRequestRange(builder).build()
         }
     }

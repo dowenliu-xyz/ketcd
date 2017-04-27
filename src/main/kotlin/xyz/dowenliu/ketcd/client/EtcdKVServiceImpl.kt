@@ -44,19 +44,18 @@ class EtcdKVServiceImpl internal constructor(override val client: EtcdClient) : 
     override fun putAsync(key: ByteString, value: ByteString, options: PutOption, callback: ResponseCallback<PutResponse>) =
             asyncStub.put(putRequest(key, value, options), CallbackStreamObserver(callback))
 
-    private fun getRequest(key: ByteString, options: GetOption): RangeRequest {
-        val builder = RangeRequest.newBuilder()
-                .setKey(key)
-                .setCountOnly(options.countOnly)
-                .setLimit(options.limit)
-                .setRevision(options.revision)
-                .setKeysOnly(options.keysOnly)
-                .setSerializable(options.serializable)
-                .setSortOrder(options.sortOrder)
-                .setSortTarget(options.sortTarget)
-        options.endKey?.let { builder.rangeEnd = it }
-        return builder.build()
-    }
+    private fun getRequest(key: ByteString, options: GetOption): RangeRequest =
+            RangeRequest.newBuilder()
+                    .setKey(key)
+                    .setCountOnly(options.countOnly)
+                    .setLimit(options.limit)
+                    .setRevision(options.revision)
+                    .setKeysOnly(options.keysOnly)
+                    .setSerializable(options.serializable)
+                    .setSortOrder(options.sortOrder)
+                    .setSortTarget(options.sortTarget)
+                    .setRangeEnd(options.endKey)
+                    .build()
 
     override fun get(key: ByteString, options: GetOption): RangeResponse = blockingStub.range(getRequest(key, options))
 

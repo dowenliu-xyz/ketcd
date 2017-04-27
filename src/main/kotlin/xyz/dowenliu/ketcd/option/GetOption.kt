@@ -2,6 +2,9 @@ package xyz.dowenliu.ketcd.option
 
 import com.google.protobuf.ByteString
 import xyz.dowenliu.ketcd.api.RangeRequest
+import xyz.dowenliu.ketcd.kv.FROM_KEY
+import xyz.dowenliu.ketcd.kv.NULL_KEY
+import xyz.dowenliu.ketcd.kv.prefixKeyOf
 
 /**
  * The options for get operation.
@@ -10,15 +13,15 @@ import xyz.dowenliu.ketcd.api.RangeRequest
  * @author liufl
  * @since 0.1.0
  *
- * @property endKey The end key of the get request. If it is set, the get request will return the keys from
- * _key_ to _endKey_ (exclusive).
+ * @property endKey The end key of the get request. If it is not [ByteString.EMPTY],
+ * the get request will return the keys from _key_ to _endKey_ (exclusive).
  *
- * If end key is '\u0000', the range is all keys >= key. (--from-key)
+ * If end key is '\u0000' ([FROM_KEY]), the range is all keys >= key. (--from-key)
  *
  * If the end key is one bit larger than the given key, then it gets all keys with the prefix
- * (the given key). (--prefix)
+ * (the given key). (--prefix). You can get it with [prefixKeyOf] function.
  *
- * If both key and end key are '\u0000', it returns all keys.
+ * If both key and end key are '\u0000' ([NULL_KEY] and [FROM_KEY]), it returns all keys.
  *
  * @property limit The maximum number of keys to return for a get request. No limit when it's lower than or equal zero.
  * @property revision The revision to use for the get request.
@@ -32,7 +35,7 @@ import xyz.dowenliu.ketcd.api.RangeRequest
  * @property keysOnly Flag to only return keys.
  * @property countOnly Flag to only return count of the keys.
  */
-class GetOption private constructor(val endKey: ByteString?,
+class GetOption private constructor(val endKey: ByteString,
                                     val limit: Long,
                                     val revision: Long,
                                     val sortOrder: RangeRequest.SortOrder,
@@ -59,7 +62,7 @@ class GetOption private constructor(val endKey: ByteString?,
         private var serializable = false
         private var keysOnly = false
         private var countOnly = false
-        private var endKey: ByteString? = null
+        private var endKey: ByteString = ByteString.EMPTY
 
         /**
          * Limit the number of keys to return for a get request. By default is 0 - no limitation.
@@ -145,20 +148,20 @@ class GetOption private constructor(val endKey: ByteString?,
         }
 
         /**
-         * Set the end key of the get request. If it is set, the get request will return the keys from
-         * _key_ to _endKey_ (exclusive).
+         * Set the end key of the get request. If it is not [ByteString.EMPTY],
+         * the get request will return the keys from _key_ to _endKey_ (exclusive).
          *
-         * If end key is '\u0000', the range is all keys >= key. (--from-key)
+         * If end key is '\u0000' ([FROM_KEY]), the range is all keys >= key. (--from-key)
          *
          * If the end key is one bit larger than the given key, then it gets all keys with the prefix
-         * (the given key). (--prefix)
+         * (the given key). (--prefix). You can get it with [prefixKeyOf] function.
          *
-         * If both key and end key are '\u0000', it returns all keys.
+         * If both key and end key are '\u0000' ([NULL_KEY] and [FROM_KEY]), it returns all keys.
          *
          * @param endKey end key
          * @return this builder to train.
          */
-        fun withRange(endKey: ByteString?): Builder {
+        fun withRange(endKey: ByteString): Builder {
             this.endKey = endKey
             return this
         }
