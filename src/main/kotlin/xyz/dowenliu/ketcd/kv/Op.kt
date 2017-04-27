@@ -5,9 +5,9 @@ import xyz.dowenliu.ketcd.api.DeleteRangeRequest
 import xyz.dowenliu.ketcd.api.PutRequest
 import xyz.dowenliu.ketcd.api.RangeRequest
 import xyz.dowenliu.ketcd.api.RequestOp
-import xyz.dowenliu.ketcd.kv.option.DeleteOption
-import xyz.dowenliu.ketcd.kv.option.GetOption
-import xyz.dowenliu.ketcd.kv.option.PutOption
+import xyz.dowenliu.ketcd.option.DeleteOption
+import xyz.dowenliu.ketcd.option.GetOption
+import xyz.dowenliu.ketcd.option.PutOption
 
 /**
  * Etcd Operation

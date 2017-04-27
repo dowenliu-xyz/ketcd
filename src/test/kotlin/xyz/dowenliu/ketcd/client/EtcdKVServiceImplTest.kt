@@ -7,10 +7,10 @@ import org.testng.asserts.Assertion
 import xyz.dowenliu.ketcd.Endpoint
 import xyz.dowenliu.ketcd.api.*
 import xyz.dowenliu.ketcd.kv.*
-import xyz.dowenliu.ketcd.kv.option.CompactOption
-import xyz.dowenliu.ketcd.kv.option.DeleteOption
-import xyz.dowenliu.ketcd.kv.option.GetOption
-import xyz.dowenliu.ketcd.kv.option.PutOption
+import xyz.dowenliu.ketcd.option.CompactOption
+import xyz.dowenliu.ketcd.option.DeleteOption
+import xyz.dowenliu.ketcd.option.GetOption
+import xyz.dowenliu.ketcd.option.PutOption
 import xyz.dowenliu.ketcd.protobuf.toByteString
 import xyz.dowenliu.ketcd.version.EtcdVersion
 import java.util.concurrent.CountDownLatch

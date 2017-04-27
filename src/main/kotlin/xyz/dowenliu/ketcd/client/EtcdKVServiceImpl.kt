@@ -5,10 +5,10 @@ import com.google.protobuf.ByteString
 import io.grpc.ManagedChannel
 import xyz.dowenliu.ketcd.api.*
 import xyz.dowenliu.ketcd.kv.Txn
-import xyz.dowenliu.ketcd.kv.option.CompactOption
-import xyz.dowenliu.ketcd.kv.option.DeleteOption
-import xyz.dowenliu.ketcd.kv.option.GetOption
-import xyz.dowenliu.ketcd.kv.option.PutOption
+import xyz.dowenliu.ketcd.option.CompactOption
+import xyz.dowenliu.ketcd.option.DeleteOption
+import xyz.dowenliu.ketcd.option.GetOption
+import xyz.dowenliu.ketcd.option.PutOption
 
 /**
  * Implementation of etcd kv service.

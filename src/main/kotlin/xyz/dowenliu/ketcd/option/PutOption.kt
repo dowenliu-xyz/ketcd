@@ -1,4 +1,4 @@
-package xyz.dowenliu.ketcd.kv.option
+package xyz.dowenliu.ketcd.option
 
 import xyz.dowenliu.ketcd.version.EtcdVersion
 import xyz.dowenliu.ketcd.version.ForEtcdVersion

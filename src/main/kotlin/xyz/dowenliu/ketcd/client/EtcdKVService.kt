@@ -4,10 +4,10 @@ import com.google.common.util.concurrent.ListenableFuture
 import com.google.protobuf.ByteString
 import xyz.dowenliu.ketcd.api.*
 import xyz.dowenliu.ketcd.kv.Txn
-import xyz.dowenliu.ketcd.kv.option.CompactOption
-import xyz.dowenliu.ketcd.kv.option.DeleteOption
-import xyz.dowenliu.ketcd.kv.option.GetOption
-import xyz.dowenliu.ketcd.kv.option.PutOption
+import xyz.dowenliu.ketcd.option.CompactOption
+import xyz.dowenliu.ketcd.option.DeleteOption
+import xyz.dowenliu.ketcd.option.GetOption
+import xyz.dowenliu.ketcd.option.PutOption
 
 /**
  * Interface of kv service talking to etcd.

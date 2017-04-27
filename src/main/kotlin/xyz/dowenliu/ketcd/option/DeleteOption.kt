@@ -1,4 +1,4 @@
-package xyz.dowenliu.ketcd.kv.option
+package xyz.dowenliu.ketcd.option
 
 import com.google.protobuf.ByteString
 import xyz.dowenliu.ketcd.version.EtcdVersion

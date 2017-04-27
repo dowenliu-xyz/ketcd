@@ -9,7 +9,7 @@ import xyz.dowenliu.ketcd.api.LeaseGrantResponse
 import xyz.dowenliu.ketcd.api.LeaseRevokeResponse
 import xyz.dowenliu.ketcd.api.LeaseTimeToLiveResponse
 import xyz.dowenliu.ketcd.exception.LeaseNotFoundException
-import xyz.dowenliu.ketcd.kv.option.PutOption
+import xyz.dowenliu.ketcd.option.PutOption
 import xyz.dowenliu.ketcd.protobuf.toByteString
 import xyz.dowenliu.ketcd.version.EtcdVersion
 import java.util.concurrent.CountDownLatch

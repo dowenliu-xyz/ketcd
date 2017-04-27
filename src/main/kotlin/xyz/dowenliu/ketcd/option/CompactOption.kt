@@ -1,4 +1,4 @@
-package xyz.dowenliu.ketcd.kv.option
+package xyz.dowenliu.ketcd.option
 
 /**
  * The options for compaction operation.
