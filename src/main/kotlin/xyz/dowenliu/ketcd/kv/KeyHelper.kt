@@ -17,7 +17,7 @@ import xyz.dowenliu.ketcd.protobuf.toByteString
  */
 val FROM_KEY: ByteString = ByteString.copyFrom("\u0000", Charsets.UTF_8)
 
-val NULL_KEY: ByteString = ByteString.copyFrom(byteArrayOf('\u0000'.toByte()))
+val NULL_KEY: ByteString = FROM_KEY
 
 /**
  * EndKey option value for get/delete prefixed by [string] (--prefix)
