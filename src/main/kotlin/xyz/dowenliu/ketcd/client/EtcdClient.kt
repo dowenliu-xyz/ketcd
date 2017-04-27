@@ -98,6 +98,8 @@ class EtcdClient(val channelBuilder: ManagedChannelBuilder<*>,
 
     fun newLeaseService(): EtcdLeaseService = EtcdLeaseServiceImpl(this)
 
+    fun newWatchService(): EtcdWatchService = EtcdWatchServiceImpl(this)
+
     class Builder internal constructor() {
         private val _endpoints: MutableList<Endpoint> = mutableListOf()
         /**
