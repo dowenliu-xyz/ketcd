@@ -9,9 +9,19 @@ import xyz.dowenliu.ketcd.protobuf.toByteString
  * create at 2017/4/8
  * @author liufl
  * @since 0.1.0
+ *
+ * @property username username of [ByteString] format.
+ * @property password password of [ByteString] format.
  */
-data class UsernamePassword internal constructor(val username: ByteString, val password: ByteString){
+data class UsernamePassword constructor(val username: ByteString, val password: ByteString){
     companion object {
+        /**
+         * Create an [UsernamePassword] with [String] format username and password.
+         *
+         * @param username username in [String] format.
+         * @param password password in [String] format.
+         * @return The [UsernamePassword] created.
+         */
         fun of(username: String, password: String): UsernamePassword {
             require(username.isNotBlank(), { "username can not be empty."})
             require(password.isNotBlank(), { "password can not be empty" })
