@@ -256,7 +256,7 @@ interface EtcdAuthService {
      * @param rangeEnd the target range to grant on to. [ByteString.EMPTY] means just key, no range.
      * @return [AuthRoleGrantPermissionResponse]
      * @see [EtcdKVService.get] about [key] and [rangeEnd]
-     * @see [xyz.dowenliu.ketcd.kv.option.GetOption.endKey] about [rangeEnd]
+     * @see [xyz.dowenliu.ketcd.option.GetOption.endKey] about [rangeEnd]
      */
     fun roleGrantPermission(role: String,
                             permType: Permission.Type,
@@ -272,7 +272,7 @@ interface EtcdAuthService {
      * @param rangeEnd the target range to grant on to. [ByteString.EMPTY] means just key, no range.
      * @return [ListenableFuture] of [AuthRoleGrantPermissionResponse]
      * @see [EtcdKVService.get] about [key] and [rangeEnd]
-     * @see [xyz.dowenliu.ketcd.kv.option.GetOption.endKey] about [rangeEnd]
+     * @see [xyz.dowenliu.ketcd.option.GetOption.endKey] about [rangeEnd]
      */
     fun roleGrantPermissionInFuture(role: String,
                                     permType: Permission.Type,
@@ -289,7 +289,7 @@ interface EtcdAuthService {
      * @param rangeEnd the target range to grant on to. [ByteString.EMPTY] means just key, no range.
      * @param callback A [ResponseCallback] to handle the response received.
      * @see [EtcdKVService.get] about [key] and [rangeEnd]
-     * @see [xyz.dowenliu.ketcd.kv.option.GetOption.endKey] about [rangeEnd]
+     * @see [xyz.dowenliu.ketcd.option.GetOption.endKey] about [rangeEnd]
      */
     fun roleGrantPermissionAsync(role: String,
                                  permType: Permission.Type,
@@ -305,7 +305,7 @@ interface EtcdAuthService {
      * @param rangeEnd The rangeEnd to revoke. [ByteString.EMPTY] means just key, no range.
      * @return [AuthRoleRevokePermissionResponse]
      * @see [EtcdKVService.get] about [key] and [rangeEnd]
-     * @see [xyz.dowenliu.ketcd.kv.option.GetOption.endKey] about [rangeEnd]
+     * @see [xyz.dowenliu.ketcd.option.GetOption.endKey] about [rangeEnd]
      */
     fun roleRevokePermission(role: String,
                              key: ByteString,
@@ -319,7 +319,7 @@ interface EtcdAuthService {
      * @param rangeEnd The rangeEnd to revoke. [ByteString.EMPTY] means just key, no range.
      * @return [ListenableFuture] of [AuthRoleRevokePermissionResponse]
      * @see [EtcdKVService.get] about [key] and [rangeEnd]
-     * @see [xyz.dowenliu.ketcd.kv.option.GetOption.endKey] about [rangeEnd]
+     * @see [xyz.dowenliu.ketcd.option.GetOption.endKey] about [rangeEnd]
      */
     fun roleRevokePermissionInFuture(role: String,
                                      key: ByteString,
@@ -334,7 +334,7 @@ interface EtcdAuthService {
      * @param rangeEnd The rangeEnd to revoke. [ByteString.EMPTY] means just key, no range.
      * @param callback A [ResponseCallback] to handle the response received.
      * @see [EtcdKVService.get] about [key] and [rangeEnd]
-     * @see [xyz.dowenliu.ketcd.kv.option.GetOption.endKey] about [rangeEnd]
+     * @see [xyz.dowenliu.ketcd.option.GetOption.endKey] about [rangeEnd]
      */
     fun roleRevokePermissionAsync(role: String,
                                   key: ByteString,
