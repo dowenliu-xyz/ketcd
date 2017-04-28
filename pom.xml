@@ -7,8 +7,48 @@
     <groupId>xyz.dowenliu.etcd</groupId>
     <artifactId>ketcd</artifactId>
     <version>0.1.0-SNAPSHOT</version>
-    <name>Java/Kotlin Client for ectd V3</name>
     <packaging>jar</packaging>
+
+    <name>Ketcd</name>
+    <description>
+        A Java Client for ectd V3 written in kotlin
+    </description>
+    <url>https://github.com/dowenliu-xyz/ketcd</url>
+    <inceptionYear>2017</inceptionYear>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>dowenliu-xyz</id>
+            <name>Fulai Liu</name>
+            <url>https://github.com/dowenliu-xyz</url>
+            <email>hawkdowen@hotmail.com</email>
+            <timezone>+8</timezone>
+        </developer>
+    </developers>
+
+    <scm>
+        <url>https://github.com/dowenliu-xyz/ketcd.git</url>
+        <connection>scm:git:https://github.com/dowenliu-xyz/ketcd.git</connection>
+        <developerConnection>scm:git:https://github.com/dowenliu-xyz/ketcd.git</developerConnection>
+    </scm>
+
+    <issueManagement>
+        <system>GitHub issues</system>
+        <url>https://github.com/dowenliu-xyz/ketcd/issues</url>
+    </issueManagement>
+
+    <ciManagement>
+        <system>Travis CI</system>
+        <url>https://travis-ci.org/dowenliu-xyz/ketcd</url>
+    </ciManagement>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
