@@ -10,6 +10,7 @@ import xyz.dowenliu.ketcd.client.EtcdLeaseService.KeepAliveEventHandler
 import xyz.dowenliu.ketcd.client.EtcdLeaseService.KeepAliveSentinel
 import xyz.dowenliu.ketcd.exception.LeaseNotFoundException
 import java.util.concurrent.*
+import java.util.concurrent.atomic.AtomicLong
 
 /**
  * Implementation of etcd lease service.
@@ -21,6 +22,8 @@ import java.util.concurrent.*
 class EtcdLeaseServiceImpl internal constructor(override val client: EtcdClient) : EtcdLeaseService {
     companion object {
         private val logger: Logger = LoggerFactory.getLogger(EtcdLeaseServiceImpl::class.java)
+        private val keepAliveThreadGroup = ThreadGroup("lease-keep-alive")
+        private val threadCounter = AtomicLong()
     }
 
     private val channel: ManagedChannel = client.channelBuilder.build()
@@ -78,7 +81,10 @@ class EtcdLeaseServiceImpl internal constructor(override val client: EtcdClient)
                                             val eventHandler: KeepAliveEventHandler?) : KeepAliveSentinel {
         private var closed: Boolean = false
         private var ttlSignal: BlockingQueue<Long> = ArrayBlockingQueue(1)
-        private val scheduledExecutor = Executors.newSingleThreadScheduledExecutor()
+        private val scheduledExecutor = Executors.newSingleThreadScheduledExecutor {
+            Thread(keepAliveThreadGroup, "lease-$leaseId-keep-alive-thread-${threadCounter.incrementAndGet()}")
+            // The thread should not be daemon, JVM stop after this thread stop.
+        }
         private val keepAliveResponseStreamObserver: StreamObserver<LeaseKeepAliveResponse> =
                 object : StreamObserver<LeaseKeepAliveResponse> {
                     override fun onNext(value: LeaseKeepAliveResponse?) {
