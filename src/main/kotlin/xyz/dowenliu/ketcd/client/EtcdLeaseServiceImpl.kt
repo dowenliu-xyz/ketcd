@@ -82,7 +82,7 @@ class EtcdLeaseServiceImpl internal constructor(override val client: EtcdClient)
         private var closed: Boolean = false
         private var ttlSignal: BlockingQueue<Long> = ArrayBlockingQueue(1)
         private val scheduledExecutor = Executors.newSingleThreadScheduledExecutor {
-            Thread(keepAliveThreadGroup, "lease-$leaseId-keep-alive-thread-${threadCounter.incrementAndGet()}")
+            Thread(keepAliveThreadGroup, it, "lease-$leaseId-keep-alive-thread-${threadCounter.incrementAndGet()}")
             // The thread should not be daemon, JVM stop after this thread stop.
         }
         private val keepAliveResponseStreamObserver: StreamObserver<LeaseKeepAliveResponse> =
