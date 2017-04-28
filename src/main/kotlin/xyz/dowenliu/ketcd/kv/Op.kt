@@ -15,29 +15,58 @@ import xyz.dowenliu.ketcd.option.PutOption
  * create at 2017/4/15
  * @author liufl
  * @since 0.1.0
+ *
+ * @property key The start key of the operation target key range.
  */
-abstract class Op internal constructor(protected val type: Type, protected val key: ByteString) {
+abstract class Op internal constructor(protected val key: ByteString) {
     companion object {
+        /**
+         * Factor a put operation predicate.
+         *
+         * @param key The start key of the operation target key range.
+         * @param value Value to put.
+         * @param option Put operation options.
+         * @return A [PutOp] to predicate a [RequestOp] containing a PUT request.
+         */
         @JvmStatic fun put(key: ByteString, value: ByteString, option: PutOption = PutOption.DEFAULT): PutOp =
                 PutOp(key, value, option)
 
+        /**
+         * Factor a get operation predicate.
+         *
+         * @param key The start key of the operation target key range.
+         * @param option Get operation options.
+         * @return A [GetOp] to predicate a [RequestOp] containing a GET request.
+         */
         @JvmStatic fun get(key: ByteString, option: GetOption = GetOption.DEFAULT): GetOp = GetOp(key, option)
 
+        /**
+         * Factor a delete operation predicate.
+         *
+         * @param key The start key of the operation target key range.
+         * @param option Delete operation options.
+         * @return A [DeleteOp] to predicate a [RequestOp] containing a DELETE request.
+         */
         @JvmStatic fun delete(key: ByteString, option: DeleteOption = DeleteOption.DEFAULT): DeleteOp = DeleteOp(key, option)
     }
 
+    /**
+     * Predicate a [RequestOp] containing one request.
+     *
+     * @return A [RequestOp] containing one request.
+     */
     abstract fun toRequestOp(): RequestOp
 
     /**
-     * Op type.
+     * A [PutOp] to predicate a [RequestOp] containing a PUT request.
+     *
+     * @param key The start key of the operation target key range.
+     * @property value Value to put.
+     * @property option Put operation options.
      */
-    enum class Type {
-        PUT, RANGE, DELETE_RANGE
-    }
-
     class PutOp internal constructor(key: ByteString,
                                      private val value: ByteString,
-                                     private val option: PutOption) : Op(Type.PUT, key) {
+                                     private val option: PutOption) : Op(key) {
         override fun toRequestOp(): RequestOp {
             val request = PutRequest.newBuilder()
                     .setKey(key)
@@ -49,7 +78,13 @@ abstract class Op internal constructor(protected val type: Type, protected val k
         }
     }
 
-    class GetOp internal constructor(key: ByteString, private val option: GetOption) : Op(Type.RANGE, key) {
+    /**
+     * A [GetOp] to predicate a [RequestOp] containing a GET request.
+     *
+     * @param key The start key of the operation target key range.
+     * @property option Get operation options.
+     */
+    class GetOp internal constructor(key: ByteString, private val option: GetOption) : Op(key) {
         override fun toRequestOp(): RequestOp {
             val builder = RangeRequest.newBuilder()
                     .setKey(key)
@@ -65,7 +100,13 @@ abstract class Op internal constructor(protected val type: Type, protected val k
         }
     }
 
-    class DeleteOp internal constructor(key: ByteString, private val option: DeleteOption) : Op(Type.DELETE_RANGE, key) {
+    /**
+     * A [DeleteOp] to predicate a [RequestOp] containing a DELETE request.
+     *
+     * @param key The start key of the operation target key range.
+     * @property option Delete operation options.
+     */
+    class DeleteOp internal constructor(key: ByteString, private val option: DeleteOption) : Op(key) {
         override fun toRequestOp(): RequestOp {
             val builder = DeleteRangeRequest.newBuilder()
                     .setKey(key)

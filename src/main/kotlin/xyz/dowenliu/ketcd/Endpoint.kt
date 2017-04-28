@@ -6,6 +6,10 @@ package xyz.dowenliu.ketcd
  * create at 2017/4/13
  * @author liufl
  * @since 0.1.0
+ *
+ * @property host The host part of the endpoint url.
+ * @property port The port part of the endpoint url.
+ * @property schema The schema type of the endpoint url. Can only be http or https for now.
  */
 data class Endpoint internal constructor(val host: String, val port: Int, val schema: Schema) {
     companion object {
@@ -71,9 +75,24 @@ data class Endpoint internal constructor(val host: String, val port: Int, val sc
         }
     }
 
+    /**
+     * @return A string representation of the endpoint. Can be used to create an [Endpoint] by [of].
+     */
     override fun toString(): String = "${schema.value}://$host:$port"
 
+    /**
+     * Endpoint schema. Can only be http or https for now.
+     *
+     * @property value The string value of the schema.
+     */
     enum class Schema(val value: String) {
-        Http("http"), Https("https")
+        /**
+         * The HTTP schema.
+         */
+        Http("http"),
+        /**
+         * The HTTPS schema.
+         */
+        Https("https"),
     }
 }

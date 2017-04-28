@@ -18,6 +18,9 @@ import xyz.dowenliu.ketcd.version.ForEtcdVersion
 class PutOption private constructor(val leaseId: Long,
                                     @ForEtcdVersion(EtcdVersion.V3_0_11) val prevKV: Boolean) {
     companion object {
+        /**
+         * The default put options.
+         */
         @JvmStatic val DEFAULT = newBuilder().build()
 
         /**
@@ -28,6 +31,9 @@ class PutOption private constructor(val leaseId: Long,
         @JvmStatic fun newBuilder(): Builder = Builder()
     }
 
+    /**
+     * Builder to construct [PutOption].
+     */
     class Builder internal  constructor() {
         private var leaseId = 0L
         private var prevKV = false

@@ -12,6 +12,9 @@ package xyz.dowenliu.ketcd.option
  */
 class CompactOption private constructor(val revision: Long, val physical: Boolean) {
     companion object {
+        /**
+         * The default compact options.
+         */
         @JvmStatic val DEFAULT = newBuilder().build()
 
         /**
@@ -22,6 +25,9 @@ class CompactOption private constructor(val revision: Long, val physical: Boolea
         @JvmStatic fun newBuilder() = Builder()
     }
 
+    /**
+     * Builder to construct [CompactOption].
+     */
     class Builder  internal constructor() {
         private var revision = 0L
         private var physical = false
@@ -50,6 +56,9 @@ class CompactOption private constructor(val revision: Long, val physical: Boolea
             return this
         }
 
+        /**
+         * Construct a [CompactOption].
+         */
         fun build(): CompactOption = CompactOption(revision, physical)
     }
 }

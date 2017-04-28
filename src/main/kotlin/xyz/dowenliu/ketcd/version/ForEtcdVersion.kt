@@ -9,6 +9,9 @@ import kotlin.annotation.AnnotationTarget.*
  * create at 2017/4/10
  * @author liufl
  * @since 0.1.0
+ *
+ * @property since annotate version scope start.
+ * @property until annotate version scope end.
  */
 @MustBeDocumented
 @Retention(BINARY)

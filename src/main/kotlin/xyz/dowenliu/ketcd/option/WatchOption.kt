@@ -40,6 +40,9 @@ class WatchOption private constructor(val endKey: ByteString,
                                       @ForEtcdVersion(EtcdVersion.V3_0_12) val prevKV: Boolean,
                                       @ForEtcdVersion(EtcdVersion.V3_1_0_alpha0) val filters: List<WatchCreateRequest.FilterType>) {
     companion object {
+        /**
+         * The default watch options.
+         */
         @JvmStatic val DEFAULT = newBuilder().build()
 
         /**
@@ -50,6 +53,9 @@ class WatchOption private constructor(val endKey: ByteString,
         @JvmStatic fun newBuilder(): Builder = Builder()
     }
 
+    /**
+     * Builder to construct [WatchOption].
+     */
     class Builder internal constructor() {
         private var endKey: ByteString = ByteString.EMPTY
         private var startRevision: Long = 0L

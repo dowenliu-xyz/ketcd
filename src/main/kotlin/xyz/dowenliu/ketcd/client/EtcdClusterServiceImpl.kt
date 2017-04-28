@@ -20,6 +20,9 @@ class EtcdClusterServiceImpl internal constructor(override val client: EtcdClien
     private val futureStub = configureStub(ClusterGrpc.newFutureStub(channel), client.token)
     private val asyncStub = configureStub(ClusterGrpc.newStub(channel), client.token)
 
+    /**
+     * Close this service instance.
+     */
     override fun close() {
         channel.shutdownNow()
     }

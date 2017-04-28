@@ -23,6 +23,9 @@ class EtcdKVServiceImpl internal constructor(override val client: EtcdClient) : 
     private val futureStub = configureStub(KVGrpc.newFutureStub(channel), client.token)
     private val asyncStub = configureStub(KVGrpc.newStub(channel), client.token)
 
+    /**
+     * Close this service instance.
+     */
     override fun close() {
         channel.shutdownNow()
     }

@@ -6,6 +6,8 @@ import io.grpc.stub.StreamObserver
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import xyz.dowenliu.ketcd.api.*
+import xyz.dowenliu.ketcd.client.EtcdLeaseService.KeepAliveEventHandler
+import xyz.dowenliu.ketcd.client.EtcdLeaseService.KeepAliveSentinel
 import xyz.dowenliu.ketcd.exception.LeaseNotFoundException
 import java.util.concurrent.*
 
@@ -26,6 +28,9 @@ class EtcdLeaseServiceImpl internal constructor(override val client: EtcdClient)
     private val futureStub = configureStub(LeaseGrpc.newFutureStub(channel), client.token)
     private val asyncStub = configureStub(LeaseGrpc.newStub(channel), client.token)
 
+    /**
+     * Close this service instance.
+     */
     override fun close() {
         channel.shutdownNow()
     }
@@ -66,12 +71,11 @@ class EtcdLeaseServiceImpl internal constructor(override val client: EtcdClient)
             asyncStub.leaseRevoke(LeaseRevokeRequest.newBuilder().setID(leaseId).build(),
                     CallbackStreamObserver(callback))
 
-    override fun keepAlive(leaseId: Long, eventHandler: EtcdLeaseService.KeepAliveEventHandler?):
-            EtcdLeaseService.KeepAliveSentinel = MyKeepAliveSentinel(leaseId, eventHandler)
+    override fun keepAlive(leaseId: Long, eventHandler: KeepAliveEventHandler?): KeepAliveSentinel =
+            MyKeepAliveSentinel(leaseId, eventHandler)
 
     private inner class MyKeepAliveSentinel(val leaseId: Long,
-                                            val eventHandler: EtcdLeaseService.KeepAliveEventHandler?) :
-            EtcdLeaseService.KeepAliveSentinel {
+                                            val eventHandler: KeepAliveEventHandler?) : KeepAliveSentinel {
         private var closed: Boolean = false
         private var ttlSignal: BlockingQueue<Long> = ArrayBlockingQueue(1)
         private val scheduledExecutor = Executors.newSingleThreadScheduledExecutor()

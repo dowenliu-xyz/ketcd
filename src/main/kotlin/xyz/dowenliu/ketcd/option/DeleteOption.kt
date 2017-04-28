@@ -28,6 +28,9 @@ import xyz.dowenliu.ketcd.version.ForEtcdVersion
 class DeleteOption private constructor(val endKey: ByteString,
                                        @ForEtcdVersion(EtcdVersion.V3_0_11) val prevKV: Boolean) {
     companion object {
+        /**
+         * The default delete options.
+         */
         @JvmStatic val DEFAULT = newBuilder().build()
 
         /**
@@ -38,6 +41,9 @@ class DeleteOption private constructor(val endKey: ByteString,
         @JvmStatic fun newBuilder(): Builder = Builder()
     }
 
+    /**
+     * Builder to construct [DeleteOption].
+     */
     class Builder internal constructor() {
         private var endKey: ByteString = ByteString.EMPTY
         private var prevKV = false

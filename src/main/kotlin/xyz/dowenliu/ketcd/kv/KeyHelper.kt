@@ -13,10 +13,17 @@ import xyz.dowenliu.ketcd.protobuf.toByteString
  */
 
 /**
- * EndKey option value for get/delete range all keys >= key (--from-key).
+ * EndKey option value for key range: all keys >= key (--from-key).
+ *
+ * Values: '\u0000'
  */
 val FROM_KEY: ByteString = ByteString.copyFrom("\u0000", Charsets.UTF_8)
 
+/**
+ * Smallest key for key range. Together with endKey [FROM_KEY] or '\u0000' expresses key range ALL.
+ *
+ * Values: '\u0000'
+ */
 val NULL_KEY: ByteString = FROM_KEY
 
 /**

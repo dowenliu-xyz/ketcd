@@ -33,6 +33,9 @@ interface EtcdWatchService {
      * A sentinel to cantrol the watch.
      */
     interface WatchSentinel : AutoCloseable {
+        /**
+         * @return If this sentinel is closed by [close]
+         */
         fun isClosed(): Boolean
     }
 

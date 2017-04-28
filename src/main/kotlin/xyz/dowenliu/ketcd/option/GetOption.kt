@@ -44,6 +44,9 @@ class GetOption private constructor(val endKey: ByteString,
                                     val keysOnly: Boolean,
                                     val countOnly: Boolean) {
     companion object {
+        /**
+         * The default get options.
+         */
         @JvmStatic val DEFAULT = newBuilder().build()
 
         /**
@@ -54,6 +57,9 @@ class GetOption private constructor(val endKey: ByteString,
         @JvmStatic fun newBuilder(): Builder = Builder()
     }
 
+    /**
+     * Builder to construct [GetOption].
+     */
     class Builder internal constructor() {
         private var limit = 0L
         private var revision = 0L

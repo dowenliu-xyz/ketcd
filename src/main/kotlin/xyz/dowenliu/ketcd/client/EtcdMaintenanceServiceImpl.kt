@@ -17,6 +17,9 @@ class EtcdMaintenanceServiceImpl internal constructor(override val client: EtcdC
     private val futureStub = configureStub(MaintenanceGrpc.newFutureStub(channel), client.token)
     private val asyncStub = configureStub(MaintenanceGrpc.newStub(channel), client.token)
 
+    /**
+     * Close this service instance.
+     */
     override fun close() {
         channel.shutdownNow()
     }

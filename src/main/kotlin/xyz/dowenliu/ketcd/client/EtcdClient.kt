@@ -88,18 +88,51 @@ class EtcdClient(val channelBuilder: ManagedChannelBuilder<*>,
         detectVersionLatch.await(10, TimeUnit.SECONDS)
     }
 
+    /**
+     * Create new EtcdMaintenanceService instance.
+     *
+     * @return A new instance of EtcdMaintenanceService type.
+     */
     fun newMaintenanceService(): EtcdMaintenanceService = EtcdMaintenanceServiceImpl(this)
 
+    /**
+     * Create new EtcdClusterService instance.
+     *
+     * @return A new instance of EtcdClusterService type.
+     */
     fun newClusterService(): EtcdClusterService = EtcdClusterServiceImpl(this)
 
+    /**
+     * Create new EtcdKVService instance.
+     *
+     * @return A new instance of EtcdKVService type.
+     */
     fun newKVService(): EtcdKVService = EtcdKVServiceImpl(this)
 
+    /**
+     * Create new EtcdAuthService instance.
+     *
+     * @return A new instance of EtcdAuthService type.
+     */
     fun newAuthService(): EtcdAuthService = EtcdAuthServiceImpl(this)
 
+    /**
+     * Create new EtcdLeaseService instance.
+     *
+     * @return A new instance of EtcdLeaseService type.
+     */
     fun newLeaseService(): EtcdLeaseService = EtcdLeaseServiceImpl(this)
 
+    /**
+     * Create new EtcdWatchService instance.
+     *
+     * @return A new instance of EtcdWatchService type.
+     */
     fun newWatchService(): EtcdWatchService = EtcdWatchServiceImpl(this)
 
+    /**
+     * Builder to build an EtcdClient instance.
+     */
     class Builder internal constructor() {
         private val _endpoints: MutableList<Endpoint> = mutableListOf()
         /**

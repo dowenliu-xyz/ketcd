@@ -13,6 +13,11 @@ import xyz.dowenliu.ketcd.api.Compare
 class Cmp(private val key: ByteString,
           private val op: CmpOp,
           private val target: CmpTarget<*>) {
+    /**
+     * Predicate a [Compare] using in deeper gRPC APIs.
+     *
+     * @return A [Compare] predicated.
+     */
     fun toCompare(): Compare {
         val builder = Compare.newBuilder().setKey(key)
                 .setResult(op.result)
@@ -27,9 +32,26 @@ class Cmp(private val key: ByteString,
         return builder.build()
     }
 
+    /**
+     * A sub collection of [Compare.CompareResult].
+     *
+     * In a Txn operation, we only do EQUAL, GREATER and LESS compare.
+     *
+     * @property result The [Compare.CompareResult] wrapping.
+     */
     enum class CmpOp(val result: Compare.CompareResult) {
+        /**
+         * A wrapper for [Compare.CompareResult.EQUAL]
+         */
         EQUAL(Compare.CompareResult.EQUAL),
+        /**
+         * A wrapper for [Compare.CompareResult.GREATER]
+         */
         GREATER(Compare.CompareResult.GREATER),
+
+        /**
+         * A wrapper for [Compare.CompareResult.LESS]
+         */
         LESS(Compare.CompareResult.LESS)
     }
 }

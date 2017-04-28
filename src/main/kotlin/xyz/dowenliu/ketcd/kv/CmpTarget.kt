@@ -50,15 +50,35 @@ abstract class CmpTarget<out T>(val target: Compare.CompareTarget, val targetVal
         @JvmStatic fun value(value: ByteString): ValueCmpTarget = ValueCmpTarget(value)
     }
 
+    /**
+     * [CmpTarget] for [Compare.CompareTarget.VERSION].
+     *
+     * @param targetValue The [Compare.CompareTarget.VERSION] value to compare with.
+     */
     class VersionCmpTarget internal constructor(targetValue: Long) :
             CmpTarget<Long>(Compare.CompareTarget.VERSION, targetValue)
 
+    /**
+     * [CmpTarget] for [Compare.CompareTarget.CREATE].
+     *
+     * @param targetValue The [Compare.CompareTarget.CREATE] value to compare with.
+     */
     class CreateRevisionCmpTarget internal constructor(targetValue: Long) :
             CmpTarget<Long>(Compare.CompareTarget.CREATE, targetValue)
 
+    /**
+     * [CmpTarget] for [Compare.CompareTarget.MOD].
+     *
+     * @param targetValue The [Compare.CompareTarget.MOD] value to compare with.
+     */
     class ModRevisionCmpTarget internal constructor(targetValue: Long) :
             CmpTarget<Long>(Compare.CompareTarget.MOD, targetValue)
 
+    /**
+     * [CmpTarget] for [Compare.CompareTarget.VALUE].
+     *
+     * @param targetValue The [Compare.CompareTarget.VALUE] value to compare with.
+     */
     class ValueCmpTarget internal constructor(targetValue: ByteString) :
             CmpTarget<ByteString>(Compare.CompareTarget.VALUE, targetValue)
 }
