@@ -13,6 +13,9 @@ import java.net.URI
  * @since 0.1.0
  */
 class DnsSrvNameResolverFactory : AbstractEtcdNameResolverFactory() {
+    /**
+     * Companion object of [DnsSrvNameResolverFactory]
+     */
     companion object {
         private const val SCHEME = "dns+srv"
         private const val NAME = "dns+srv"

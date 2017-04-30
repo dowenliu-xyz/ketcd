@@ -29,6 +29,9 @@ import java.util.concurrent.atomic.AtomicReference
  */
 class EtcdClient(val channelBuilder: ManagedChannelBuilder<*>,
                  val token: String?) {
+    /**
+     * Companion object of [EtcdClient]
+     */
     companion object {
         /**
          * Creates new Builder instance.

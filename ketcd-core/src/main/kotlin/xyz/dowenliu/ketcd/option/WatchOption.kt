@@ -39,6 +39,9 @@ class WatchOption private constructor(val endKey: ByteString,
                                       val progressNotify: Boolean,
                                       @ForEtcdVersion(EtcdVersion.V3_0_12) val prevKV: Boolean,
                                       @ForEtcdVersion(EtcdVersion.V3_1_0_alpha0) val filters: List<WatchCreateRequest.FilterType>) {
+    /**
+     * Companion object of [WatchOption]
+     */
     companion object {
         /**
          * The default watch options.

@@ -11,8 +11,13 @@ import java.net.URI
  * create at 2017/4/8
  * @author liufl
  * @since 3.1.0
+ *
+ * @property uris Pre-configured known Etcd endpoint URIs.
  */
 class SimpleEtcdNameResolverFactory(private val uris: List<URI>) : AbstractEtcdNameResolverFactory() {
+    /**
+     * Companion object of [SimpleEtcdNameResolverFactory]
+     */
     companion object {
         private const val SCHEME = "etcd"
         private const val NAME = "simple"

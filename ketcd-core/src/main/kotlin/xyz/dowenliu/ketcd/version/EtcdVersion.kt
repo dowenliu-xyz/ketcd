@@ -130,6 +130,9 @@ enum class EtcdVersion(val value: String, val releaseNumber: Int) {
     V3_1_6("3.1.6", 28),
     ;
 
+    /**
+     * Companion object of [EtcdVersion]
+     */
     companion object {
         /**
          * Current latest etcd version.

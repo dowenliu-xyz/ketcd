@@ -19,6 +19,9 @@ import xyz.dowenliu.ketcd.option.PutOption
  * @property key The start key of the operation target key range.
  */
 abstract class Op internal constructor(protected val key: ByteString) {
+    /**
+     * Companion object of [Op]
+     */
     companion object {
         /**
          * Factor a put operation predicate.

@@ -14,6 +14,9 @@ import xyz.dowenliu.ketcd.protobuf.toByteString
  * @property password password of [ByteString] format.
  */
 data class UsernamePassword constructor(val username: ByteString, val password: ByteString){
+    /**
+     * Companion object of [UsernamePassword]
+     */
     companion object {
         /**
          * Create an [UsernamePassword] with [String] format username and password.

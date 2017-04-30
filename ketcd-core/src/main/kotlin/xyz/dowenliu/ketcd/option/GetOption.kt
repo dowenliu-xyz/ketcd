@@ -43,6 +43,9 @@ class GetOption private constructor(val endKey: ByteString,
                                     val serializable: Boolean,
                                     val keysOnly: Boolean,
                                     val countOnly: Boolean) {
+    /**
+     * Companion object of [GetOption]
+     */
     companion object {
         /**
          * The default get options.

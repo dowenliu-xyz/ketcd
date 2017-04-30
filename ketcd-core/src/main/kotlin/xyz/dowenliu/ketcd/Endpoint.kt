@@ -12,6 +12,9 @@ package xyz.dowenliu.ketcd
  * @property schema The schema type of the endpoint url. Can only be http or https for now.
  */
 data class Endpoint internal constructor(val host: String, val port: Int, val schema: Schema) {
+    /**
+     * Companion object of [Endpoint]
+     */
     companion object {
         /**
          * Construct an Endpoint instance with specific schema, host and port

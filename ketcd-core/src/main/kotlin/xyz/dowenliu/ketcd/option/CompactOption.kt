@@ -11,6 +11,9 @@ package xyz.dowenliu.ketcd.option
  * @property physical Whether the compact should wait until physically applied
  */
 class CompactOption private constructor(val revision: Long, val physical: Boolean) {
+    /**
+     * Companion object of [CompactOption]
+     */
     companion object {
         /**
          * The default compact options.

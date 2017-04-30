@@ -9,6 +9,10 @@ import xyz.dowenliu.ketcd.api.Compare
  * create at 2017/4/15
  * @author liufl
  * @since 0.1.0
+ *
+ * @property key Compare key
+ * @property op CmpOp
+ * @property target Compare target.
  */
 class Cmp(private val key: ByteString,
           private val op: CmpOp,

@@ -16,6 +16,9 @@ import xyz.dowenliu.ketcd.api.Compare
  * @property targetValue The compare target value of this compare.
  */
 abstract class CmpTarget<out T>(val target: Compare.CompareTarget, val targetValue: T) {
+    /**
+     * Companion object of [CmpTarget]
+     */
     companion object {
         /**
          * ComparePredicate on a given _version_

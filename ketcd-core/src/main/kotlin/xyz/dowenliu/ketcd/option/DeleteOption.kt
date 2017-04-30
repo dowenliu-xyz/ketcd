@@ -27,6 +27,9 @@ import xyz.dowenliu.ketcd.version.ForEtcdVersion
  */
 class DeleteOption private constructor(val endKey: ByteString,
                                        @ForEtcdVersion(EtcdVersion.V3_0_11) val prevKV: Boolean) {
+    /**
+     * Companion object of [DeleteOption]
+     */
     companion object {
         /**
          * The default delete options.

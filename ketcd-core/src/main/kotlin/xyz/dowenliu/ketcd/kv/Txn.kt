@@ -16,6 +16,9 @@ import xyz.dowenliu.ketcd.api.TxnRequest
 class Txn private constructor(private val testList: List<Cmp>,
                               private val successOpList: List<Op>,
                               private val failureOpList: List<Op>) {
+    /**
+     * Companion object of [Txn]
+     */
     companion object {
         /**
          * Get a [Builder].

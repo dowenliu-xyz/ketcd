@@ -20,6 +20,9 @@ import java.util.concurrent.atomic.AtomicLong
  * @since 0.1.0
  */
 class EtcdLeaseServiceImpl internal constructor(override val client: EtcdClient) : EtcdLeaseService {
+    /**
+     * Companion object of [EtcdLeaseServiceImpl]
+     */
     companion object {
         private val logger: Logger = LoggerFactory.getLogger(EtcdLeaseServiceImpl::class.java)
         private val keepAliveThreadGroup = ThreadGroup("lease-keep-alive")

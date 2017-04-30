@@ -18,6 +18,9 @@ import javax.naming.directory.InitialDirContext
  */
 class DnsSrvNameResolver(name: String, executorResource: SharedResourceHolder.Resource<ExecutorService>) :
         AbstractEtcdNameResolver(name, executorResource) {
+    /**
+     * Companion object of [DnsSrvNameResolver]
+     */
     companion object {
         private val LOGGER: Logger = LoggerFactory.getLogger(DnsSrvNameResolver::class.java)
         private val ATTRIBUTE_IDS = arrayOf("SRV")

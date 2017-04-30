@@ -17,6 +17,9 @@ import xyz.dowenliu.ketcd.version.ForEtcdVersion
 // TODO ignore-lease
 class PutOption private constructor(val leaseId: Long,
                                     @ForEtcdVersion(EtcdVersion.V3_0_11) val prevKV: Boolean) {
+    /**
+     * Companion object of [PutOption]
+     */
     companion object {
         /**
          * The default put options.
