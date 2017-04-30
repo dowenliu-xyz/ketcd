@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [[ -z "${ETCD_VERSION}" ]]; then
-  ETCD_VERSION="v3.1.5"
+  ETCD_VERSION="v3.1.7"
 fi
 OS=`uname`
 
