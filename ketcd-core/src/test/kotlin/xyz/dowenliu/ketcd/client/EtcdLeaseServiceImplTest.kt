@@ -122,6 +122,7 @@ class EtcdLeaseServiceImplTest {
     @Test(dependsOnGroups = arrayOf("leaseGrant"), groups = arrayOf("leaseTimeToLive"))
     fun testTimeToLive() {
         val etcdVersion = etcdClient.knowVersion.get() ?: throw IllegalStateException("Unknown etcd version.")
+        logger.debug("EtcdVersion:${etcdVersion.value}")
         if (etcdVersion.releaseNumber < EtcdVersion.V3_1_0_alpha0.releaseNumber) return
         val kvService = etcdClient.newKVService()
         val leaseService = etcdClient.newLeaseService()
@@ -136,6 +137,10 @@ class EtcdLeaseServiceImplTest {
             assertion.assertEquals(ttlResp.keysCount, 0)
             ttlResp = leaseService.timeToLive(leaseId, true)
             assertion.assertNotEquals(ttlResp.keysCount, 0)
+            if (etcdVersion.releaseNumber < EtcdVersion.V3_2_0_rc0.releaseNumber) return
+            Thread.sleep(6000)
+            ttlResp = leaseService.timeToLive(leaseId)
+            assertion.assertEquals(ttlResp.ttl, -1L)
         } finally {
             kvService.deleteInFuture(testKey1).get()
         }
@@ -144,6 +149,7 @@ class EtcdLeaseServiceImplTest {
     @Test(dependsOnGroups = arrayOf("leaseGrant"), groups = arrayOf("leaseTimeToLive"))
     fun testTimeToLiveInFuture() {
         val etcdVersion = etcdClient.knowVersion.get() ?: throw IllegalStateException("Unknown etcd version.")
+        logger.debug("EtcdVersion:${etcdVersion.value}")
         if (etcdVersion.releaseNumber < EtcdVersion.V3_1_0_alpha0.releaseNumber) return
         val kvService = etcdClient.newKVService()
         val leaseService = etcdClient.newLeaseService()
@@ -158,6 +164,10 @@ class EtcdLeaseServiceImplTest {
             assertion.assertEquals(ttlResp.keysCount, 0)
             ttlResp = leaseService.timeToLiveInFuture(leaseId, true).get(2, TimeUnit.SECONDS)
             assertion.assertNotEquals(ttlResp.keysCount, 0)
+            if (etcdVersion.releaseNumber < EtcdVersion.V3_2_0_rc0.releaseNumber) return
+            Thread.sleep(6000)
+            ttlResp = leaseService.timeToLiveInFuture(leaseId).get(3, TimeUnit.SECONDS)
+            assertion.assertEquals(ttlResp.ttl, -1L)
         } finally {
             kvService.deleteInFuture(testKey2).get()
         }
@@ -166,6 +176,7 @@ class EtcdLeaseServiceImplTest {
     @Test(dependsOnGroups = arrayOf("leaseGrant"), groups = arrayOf("leaseTimeToLive"))
     fun testTimeToLiveAsync() {
         val etcdVersion = etcdClient.knowVersion.get() ?: throw IllegalStateException("Unknown etcd version.")
+        logger.debug("EtcdVersion:${etcdVersion.value}")
         if (etcdVersion.releaseNumber < EtcdVersion.V3_1_0_alpha0.releaseNumber) return
         val kvService = etcdClient.newKVService()
         val leaseService = etcdClient.newLeaseService()
@@ -228,6 +239,34 @@ class EtcdLeaseServiceImplTest {
             if (throwable != null) throw throwable
             ttlResp = leaseService.timeToLive(leaseId, true)
             assertion.assertNotEquals(ttlResp.keysCount, 0)
+            if (etcdVersion.releaseNumber < EtcdVersion.V3_2_0_rc0.releaseNumber) return
+            Thread.sleep(6000)
+            respRef.set(null)
+            errorRef.set(null)
+            val finishLatch3 = CountDownLatch(1)
+            leaseService.timeToLiveAsync(leaseId, true, object : ResponseCallback<LeaseTimeToLiveResponse> {
+                override fun onResponse(response: LeaseTimeToLiveResponse) {
+                    respRef.set(response)
+                    logger.debug("A lease timeToLive response received.")
+                }
+
+                override fun onError(throwable: Throwable) {
+                    errorRef.set(throwable)
+                    logger.error("", throwable)
+                }
+
+                override fun completeCallback() {
+                    finishLatch3.countDown()
+                    logger.debug("Asynchronously lease timeToLive request finished.")
+                }
+            })
+            finishLatch3.await(2, TimeUnit.SECONDS)
+            response = respRef.get()
+            throwable = errorRef.get()
+            assertion.assertTrue(response != null || throwable != null)
+            if (throwable != null) throw throwable
+            ttlResp = leaseService.timeToLive(leaseId, true)
+            assertion.assertEquals(ttlResp.ttl, -1L)
         } finally {
             kvService.deleteInFuture(testKey3).get()
         }
