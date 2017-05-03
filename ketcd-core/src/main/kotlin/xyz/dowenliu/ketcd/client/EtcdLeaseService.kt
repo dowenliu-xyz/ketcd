@@ -58,7 +58,9 @@ interface EtcdLeaseService : AutoCloseable {
      *
      * @param leaseId The id of the lease to retrieve.
      * @param withKeys If the keys attached to the lease should return in the response.
-     * @return [LeaseTimeToLiveResponse]
+     * @return [LeaseTimeToLiveResponse].
+     * If the etcd version is greater than [EtcdVersion.V3_2_0_rc0] and the lease not found,
+     * the _TTL_ of the response will be -1.
      */
     @ForEtcdVersion(EtcdVersion.V3_1_0_alpha0)
     fun timeToLive(leaseId: Long, withKeys: Boolean = false): LeaseTimeToLiveResponse
@@ -68,7 +70,9 @@ interface EtcdLeaseService : AutoCloseable {
      *
      * @param leaseId The id of the lease to retrieve.
      * @param withKeys If the keys attached to the lease should return in the response.
-     * @return [ListenableFuture] of [LeaseTimeToLiveResponse]
+     * @return [ListenableFuture] of [LeaseTimeToLiveResponse].
+     * If the etcd version is greater than [EtcdVersion.V3_2_0_rc0] and the lease not found,
+     * the _TTL_ of the response will be -1.
      */
     @ForEtcdVersion(EtcdVersion.V3_1_0_alpha0)
     fun timeToLiveInFuture(leaseId: Long, withKeys: Boolean = false): ListenableFuture<LeaseTimeToLiveResponse>
@@ -78,7 +82,9 @@ interface EtcdLeaseService : AutoCloseable {
      *
      * @param leaseId The id of the lease to retrieve.
      * @param withKeys If the keys attached to the lease should return in the response.
-     * @return [LeaseTimeToLiveResponse]
+     * @param callback A [ResponseCallback] to handle the response.
+     * If the etcd version is greater than [EtcdVersion.V3_2_0_rc0] and the lease not found,
+     * the _TTL_ of the response will be -1.
      */
     @ForEtcdVersion(EtcdVersion.V3_1_0_alpha0)
     fun timeToLiveAsync(leaseId: Long, withKeys: Boolean = false, callback: ResponseCallback<LeaseTimeToLiveResponse>)
@@ -148,6 +154,11 @@ interface EtcdLeaseService : AutoCloseable {
 
         /**
          * Called when a exception occurred.
+         *
+         * Since v3.2.0-rc.0, this method will only be called on IO/Net error.
+         * No server-side error will be returned.
+         * [#7488](https://github.com/coreos/etcd/issues/7488),[#7732](https://github.com/coreos/etcd/pull/7732)
+         * clientv3: never return an error for KeepAlive
          *
          * @param throwable The exception caught.
          */
