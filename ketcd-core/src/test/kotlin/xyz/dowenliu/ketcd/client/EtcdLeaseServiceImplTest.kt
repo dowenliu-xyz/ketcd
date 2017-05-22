@@ -123,7 +123,7 @@ class EtcdLeaseServiceImplTest {
     fun testTimeToLive() {
         val etcdVersion = etcdClient.knowVersion.get() ?: throw IllegalStateException("Unknown etcd version.")
         logger.debug("EtcdVersion:${etcdVersion.value}")
-        if (etcdVersion.releaseNumber < EtcdVersion.V3_1_0_alpha0.releaseNumber) return
+        if (etcdVersion < EtcdVersion.V3_1_0_alpha0) return
         val kvService = etcdClient.newKVService()
         val leaseService = etcdClient.newLeaseService()
         val leaseId = leaseService.grantInFuture(5).get(5, TimeUnit.SECONDS).id
@@ -137,7 +137,7 @@ class EtcdLeaseServiceImplTest {
             assertion.assertEquals(ttlResp.keysCount, 0)
             ttlResp = leaseService.timeToLive(leaseId, true)
             assertion.assertNotEquals(ttlResp.keysCount, 0)
-            if (etcdVersion.releaseNumber < EtcdVersion.V3_2_0_rc0.releaseNumber) return
+            if (etcdVersion < EtcdVersion.V3_2_0_rc0) return
             Thread.sleep(6000)
             ttlResp = leaseService.timeToLive(leaseId)
             assertion.assertEquals(ttlResp.ttl, -1L)
@@ -150,7 +150,7 @@ class EtcdLeaseServiceImplTest {
     fun testTimeToLiveInFuture() {
         val etcdVersion = etcdClient.knowVersion.get() ?: throw IllegalStateException("Unknown etcd version.")
         logger.debug("EtcdVersion:${etcdVersion.value}")
-        if (etcdVersion.releaseNumber < EtcdVersion.V3_1_0_alpha0.releaseNumber) return
+        if (etcdVersion < EtcdVersion.V3_1_0_alpha0) return
         val kvService = etcdClient.newKVService()
         val leaseService = etcdClient.newLeaseService()
         val leaseId = leaseService.grantInFuture(5).get(5, TimeUnit.SECONDS).id
@@ -164,7 +164,7 @@ class EtcdLeaseServiceImplTest {
             assertion.assertEquals(ttlResp.keysCount, 0)
             ttlResp = leaseService.timeToLiveInFuture(leaseId, true).get(2, TimeUnit.SECONDS)
             assertion.assertNotEquals(ttlResp.keysCount, 0)
-            if (etcdVersion.releaseNumber < EtcdVersion.V3_2_0_rc0.releaseNumber) return
+            if (etcdVersion < EtcdVersion.V3_2_0_rc0) return
             Thread.sleep(6000)
             ttlResp = leaseService.timeToLiveInFuture(leaseId).get(3, TimeUnit.SECONDS)
             assertion.assertEquals(ttlResp.ttl, -1L)
@@ -177,7 +177,7 @@ class EtcdLeaseServiceImplTest {
     fun testTimeToLiveAsync() {
         val etcdVersion = etcdClient.knowVersion.get() ?: throw IllegalStateException("Unknown etcd version.")
         logger.debug("EtcdVersion:${etcdVersion.value}")
-        if (etcdVersion.releaseNumber < EtcdVersion.V3_1_0_alpha0.releaseNumber) return
+        if (etcdVersion < EtcdVersion.V3_1_0_alpha0) return
         val kvService = etcdClient.newKVService()
         val leaseService = etcdClient.newLeaseService()
         val leaseId = leaseService.grantInFuture(5).get(5, TimeUnit.SECONDS).id
@@ -239,7 +239,7 @@ class EtcdLeaseServiceImplTest {
             if (throwable != null) throw throwable
             ttlResp = leaseService.timeToLive(leaseId, true)
             assertion.assertNotEquals(ttlResp.keysCount, 0)
-            if (etcdVersion.releaseNumber < EtcdVersion.V3_2_0_rc0.releaseNumber) return
+            if (etcdVersion < EtcdVersion.V3_2_0_rc0) return
             Thread.sleep(6000)
             respRef.set(null)
             errorRef.set(null)
