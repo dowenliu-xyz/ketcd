@@ -68,4 +68,47 @@ class EtcdWatchServiceImplTest {
         assertion.assertEquals(errors.size, 0)
         assertion.assertEquals(responses.size, 5)
     }
+
+    @Test
+    fun testWatchWithRevisionLessThan0() {
+        val key = "foo".toByteString()
+        val kvService = etcdClient.newKVService()
+        val watchService = etcdClient.newWatchService()
+        val responses: Queue<WatchResponse> = LinkedList()
+        val errors: Queue<Throwable> = LinkedList()
+        val finishFlag = AtomicBoolean(false)
+        val latch = CountDownLatch(1)
+        val watchOption = WatchOption.newBuilder().withStartRevision(-1L).build()
+        val sentinel = watchService.watch(key, watchOption, object : EtcdWatchService.WatchEventHandler {
+            override fun onResponse(response: WatchResponse) {
+                logger.info(response.toString())
+                synchronized(responses) {
+                    responses.add(response)
+                }
+            }
+
+            override fun onError(throwable: Throwable) {
+                logger.info("", throwable)
+                synchronized(errors) {
+                    errors.add(throwable)
+                }
+            }
+
+            override fun onCompleted() {
+                finishFlag.set(true)
+            }
+        })
+        thread {
+            kvService.putInFuture(key, "init".toByteString()).get(1, TimeUnit.SECONDS)
+            kvService.putInFuture(key, "changed".toByteString()).get(1, TimeUnit.SECONDS)
+            kvService.deleteInFuture(key).get(1, TimeUnit.SECONDS)
+            Thread.sleep(1000)
+            sentinel.close()
+            Thread.sleep(1000)
+            latch.countDown()
+        }
+        latch.await()
+        assertion.assertEquals(errors.size, 0)
+        assertion.assertEquals(responses.size, 2) // all put/delete event not caught. seams from start revision Long.MAX_VALUE
+    }
 }
