@@ -71,7 +71,7 @@ class EtcdClient(val channelBuilder: ManagedChannelBuilder<*>,
                 synchronized(Companion) {
                     val stored = knowVersion.get()
                     if (stored != null) {
-                        if (stored.releaseNumber > detectedVersion.releaseNumber) {
+                        if (stored > detectedVersion) {
                             knowVersion.set(detectedVersion)
                         }
                     } else {
