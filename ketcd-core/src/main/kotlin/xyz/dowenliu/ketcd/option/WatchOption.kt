@@ -87,8 +87,9 @@ class WatchOption private constructor(val endKey: ByteString,
         }
 
         /**
-         * Set the revision to watch from (inclusive). Less than or equals zero will watch from 'now'.
-         * // TEST_THIS can be less than zero
+         * Set the revision to watch from (inclusive). Equals zero will watch from 'now'.
+         *
+         * Note that: **Less than zero will cause you NEVER receive a put/delete event!**
          *
          * @param revision The revision to watch from (inclusive).
          * @return this builder to train.
