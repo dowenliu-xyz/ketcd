@@ -25,8 +25,21 @@ fun String.toByteString(): ByteString = ByteString.copyFromUtf8(this)
  * @receiver [ByteString]
  * @return Another [ByteString] witch is 'one bit larger'.
  */
-fun ByteString.oneBitLarger(): ByteString {
-    val byteArray = this.toByteArray()
-    byteArray[byteArray.size - 1] = byteArray.last().inc()
-    return ByteString.copyFrom(byteArray)
+fun ByteString.oneBitLarger(): ByteString = ByteString.copyFrom(this.toByteArray().oneBitLargerOf())
+
+internal fun Byte.toUnsignedByte(): Int = this.toInt().and(0xff)
+
+private fun ByteArray.oneBitLargerOf(): ByteArray {
+    val copyOf = this.copyOf()
+    var index = copyOf.lastIndex
+    while (true) {
+        if (copyOf[index].toUnsignedByte() == 0xff) {
+            copyOf[index] = 0
+            index--
+        } else {
+            copyOf[index]++
+            break
+        }
+    }
+    return copyOf.sliceArray((0..index))
 }
