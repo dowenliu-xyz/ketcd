@@ -513,6 +513,9 @@ message WatchResponse {
     // watcher with the same start_revision again.
     int64 compact_revision = 5;
 
+    // cancel_reason indicates the reason for canceling the watcher.
+    string cancel_reason = 6;
+
     repeated mvccpb.Event events = 11;
 }
 
@@ -593,6 +596,8 @@ message MemberAddResponse {
     ResponseHeader header = 1;
     // member is the member information for the added member.
     Member member = 2;
+    // members is a list of all members after adding the new member.
+    repeated Member members = 3;
 }
 
 message MemberRemoveRequest {
@@ -602,6 +607,8 @@ message MemberRemoveRequest {
 
 message MemberRemoveResponse {
     ResponseHeader header = 1;
+    // members is a list of all members after removing the member.
+    repeated Member members = 2;
 }
 
 message MemberUpdateRequest {
@@ -613,6 +620,8 @@ message MemberUpdateRequest {
 
 message MemberUpdateResponse {
     ResponseHeader header = 1;
+    // members is a list of all members after updating the member.
+    repeated Member members = 2;
 }
 
 message MemberListRequest {
