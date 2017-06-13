@@ -25,7 +25,6 @@ fun String.toByteString(): ByteString = ByteString.copyFromUtf8(this)
  * @receiver [ByteString]
  * @return Another [ByteString] witch is 'one bit larger'.
  */
-fun ByteString.oneBitLarger(): ByteString = ByteString.copyFrom(this.toByteArray().oneBitLargerOf())
 fun ByteString.oneBitLargerOf(): ByteString = ByteString.copyFrom(this.toByteArray().oneBitLargerOf())
 
 internal fun Byte.toUnsignedByte(): Int = this.toInt().and(0xff)
