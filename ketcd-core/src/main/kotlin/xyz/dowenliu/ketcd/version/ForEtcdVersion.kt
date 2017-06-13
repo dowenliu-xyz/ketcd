@@ -16,4 +16,4 @@ import kotlin.annotation.AnnotationTarget.*
 @MustBeDocumented
 @Retention(BINARY)
 @Target(CLASS, FUNCTION, FIELD)
-annotation class ForEtcdVersion(val since: EtcdVersion, val until: EtcdVersion = EtcdVersion.V3_2_0_rc0)
+annotation class ForEtcdVersion(val since: EtcdVersion, val until: EtcdVersion = EtcdVersion.V3_2_0)
