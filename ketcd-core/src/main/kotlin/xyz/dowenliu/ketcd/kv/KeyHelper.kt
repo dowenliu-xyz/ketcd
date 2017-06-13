@@ -3,7 +3,7 @@
 package xyz.dowenliu.ketcd.kv
 
 import com.google.protobuf.ByteString
-import xyz.dowenliu.ketcd.protobuf.oneBitLarger
+import xyz.dowenliu.ketcd.protobuf.oneBitLargerOf
 import xyz.dowenliu.ketcd.protobuf.toByteString
 
 /**
@@ -31,7 +31,7 @@ val NULL_KEY: ByteString = FROM_KEY
  *
  * @param string The prefix string.
  */
-fun prefixKeyOf(string: ByteString): ByteString = string.oneBitLarger()
+fun prefixKeyOf(string: ByteString): ByteString = string.oneBitLargerOf()
 
 /**
  * EndKey option value for get/delete prefixed by [string] (--prefix)
